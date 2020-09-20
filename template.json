@@ -99,10 +99,6 @@
             "value": 0,
             "ability": "wis"
           },
-          "arc": {
-            "value": 0,
-            "ability": "int"
-          },
           "ath": {
             "value": 0,
             "ability": "str"
@@ -127,6 +123,10 @@
             "value": 0,
             "ability": "int"
           },
+          "lor": {
+            "value": 0,
+            "ability": "wis"
+          },
           "med": {
             "value": 0,
             "ability": "wis"
@@ -147,9 +147,13 @@
             "value": 0,
             "ability": "cha"
           },
-          "rel": {
+          "rid": {
             "value": 0,
             "ability": "int"
+          },
+          "shl": {
+            "value": 0,
+            "ability": "dex"
           },
           "slt": {
             "value": 0,
@@ -162,6 +166,10 @@
           "sur": {
             "value": 0,
             "ability": "wis"
+          },
+          "tra": {
+            "value": 0,
+            "ability": "int"
           }
         },
         "traits": {
