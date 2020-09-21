@@ -28,7 +28,7 @@
       "system": "dnd5e",
       "path": "./packs/items.db",
       "entity": "Item"
-    },
+		},
     {
       "name": "tradegoods",
       "label": "Trade Goods (SRD)",
@@ -48,6 +48,13 @@
       "label": "Classes (SRD)",
       "system": "dnd5e",
       "path": "./packs/classes.db",
+      "entity": "Item"
+    },
+		{
+      "name": "aimeclasses",
+      "label": "Classes (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimeclasses.db",
       "entity": "Item"
     },
     {
