@@ -1267,7 +1267,7 @@ export default class Actor5e extends Actor {
     delete d.token.actorId; // Don't reference the old actor ID
     d.token.actorLink = o.token.actorLink; // Keep your actor link
     d.token.name = d.name; // Token name same as actor name
-    d.data.details.alignment = o.data.details.alignment; // Don't change alignment
+    d.data.details.shadowweakness = o.data.details.shadowweakness; // Don't change shadowweakness
     d.data.attributes.exhaustion = o.data.attributes.exhaustion; // Keep your prior exhaustion level
     d.data.attributes.inspiration = o.data.attributes.inspiration; // Keep inspiration
     d.data.spells = o.data.spells; // Keep spell slots

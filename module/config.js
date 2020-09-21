@@ -39,19 +39,12 @@ DND5E.abilityAbbreviations = {
 /* -------------------------------------------- */
 
 /**
- * Character alignment options
+ * Character shadow weakness options
  * @type {Object}
  */
-DND5E.alignments = {
-  'lg': "DND5E.AlignmentLG",
-  'ng': "DND5E.AlignmentNG",
-  'cg': "DND5E.AlignmentCG",
-  'ln': "DND5E.AlignmentLN",
-  'tn': "DND5E.AlignmentTN",
-  'cn': "DND5E.AlignmentCN",
-  'le': "DND5E.AlignmentLE",
-  'ne': "DND5E.AlignmentNE",
-  'ce': "DND5E.AlignmentCE"
+DND5E.shadowweaknesses = {
+	// TODO: Remove stub and add background?
+	"stub": "'Stub'"
 };
 
 
