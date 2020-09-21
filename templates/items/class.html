@@ -6,7 +6,7 @@
 
         <div class="header-details flexrow">
             <h1 class="charname">
-                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ClassName' }}"/>
+							{{item.name}}
             </h1>
 
             <div class="item-subtitle">
@@ -16,7 +16,33 @@
 
             <ul class="summary flexrow">
                 <li>
-                    <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+									<select name="name" data-type="String" placeholder="{{DND5E.ClassName}}">
+										{{#select item.name}}
+										<option value="New Class">{{localize "DND5E.None"}}</option>
+										{{#each config.classFeatures as |_ name|}}
+											<option value="{{toFirstCap name}}">{{toFirstCap name}}</option>
+										{{/each}}
+										{{/select}}
+									</select>
+										<!-- REVIEW: is the source necessary? -->
+                    <!-- <input type="text" name="data.source" value="{{data.source}}" placeholder="{{ localize 'DND5E.Source' }}"/> -->
+								</li>
+
+								{{!-- Subclass Name --}}
+                <li>
+									<!-- TODO: Make this prettier -->
+									{{#if (getProperty config.classFeatures (toLowerCase item.name))}}
+										<select name="data.subclass" data-type="String">
+											<option value="" selected>{{localize "DND5E.None"}}</option>
+											{{#select data.subclass}}
+												{{#each (getProperty (getProperty config.classFeatures (toLowerCase item.name)) "subclasses")}}
+													<option value="{{this.label}}">{{this.label}}</option>
+												{{/each}}
+											{{/select}}
+										</select>
+										{{else}}
+										<input hidden type="text" name="data.subclass" value="{{data.subclass}}"/>
+									{{/if}}
                 </li>
             </ul>
         </div>
@@ -44,14 +70,6 @@
                 <label>{{ localize "DND5E.ClassLevels" }}</label>
                 <div class="form-fields">
                     <input type="text" name="data.levels" value="{{data.levels}}" data-dtype="Number"/>
-                </div>
-            </div>
-
-            {{!-- Subclass Name --}}
-            <div class="form-group">
-                <label>{{ localize "DND5E.SubclassName" }}</label>
-                <div class="form-fields">
-                    <input type="text" name="data.subclass" value="{{data.subclass}}"/>
                 </div>
             </div>
 

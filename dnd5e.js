@@ -197,3 +197,15 @@ Hooks.on('getActorDirectoryEntryContext', Actor5e.addDirectoryContextOptions);
 Handlebars.registerHelper('getProperty', function (data, property) {
   return getProperty(data, property);
 });
+
+/**
+ * AIME functions
+ */
+Handlebars.registerHelper('toFirstCap', function (string) {
+	const capitalised = string.charAt(0).toUpperCase();
+  return `${capitalised}${string.slice(1)}`;
+});
+
+Handlebars.registerHelper('toLowerCase', function (string) {
+	return string.toLowerCase();
+});
