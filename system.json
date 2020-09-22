@@ -64,6 +64,13 @@
       "path": "./packs/classfeatures.db",
       "entity": "Item"
     },
+		{
+      "name": "aimeclassfeatures",
+      "label": "Class Features (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimeclassfeatures.db",
+      "entity": "Item"
+    },
     {
       "name": "races",
       "label": "Racial Features (SRD)",

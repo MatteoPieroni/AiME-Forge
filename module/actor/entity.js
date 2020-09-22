@@ -202,6 +202,7 @@ export default class Actor5e extends Actor {
    * @return {Promise<Item5e[]>}     Array of Item5e entities
    */
   static async getClassFeatures(cls) {
+		// TODO: allow for getting all features up to that level
     const level = cls.data.levels;
     const className = cls.name.toLowerCase();
 

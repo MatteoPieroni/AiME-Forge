@@ -7,30 +7,23 @@ export const ClassFeatures = {
      },
      "master-scholar": {
        "label": "Master Scholar",
-       "source": "MAN pg. 68"
+       "source": "MAN pg. 68",
+       "features": {
+         "3": ["Compendium.dnd5e.aimeclassfeatures.lxnRr36pLYTWF24L", "Compendium.dnd5e.aimeclassfeatures.okw3z2icLNrjzdXU"],
+       }
      },
-    //  "path-of-the-berserker": {
-    //    "label": "Path of the Berserker",
-    //    "source": "PHB pg. 49",
-    //    "features": {
-    //      "3": ["Compendium.dnd5e.classfeatures.CkbbAckeCtyHXEnL"],
-    //      "6": ["Compendium.dnd5e.classfeatures.0Jgf8fYY2ExwgQpN"],
-    //      "10": ["Compendium.dnd5e.classfeatures.M6VSMzVtKPhh8B0i"],
-    //      "14": ["Compendium.dnd5e.classfeatures.xzD9zlRP6dUxCtCl"]
-    //    }
-    //  },
    },
    "features": {
-    //  "1": ["Compendium.dnd5e.classfeatures.VoR0SUrNX5EJVPIO", "Compendium.dnd5e.classfeatures.SZbsNbaxFFGwBpNK"],
-    //  "2": ["Compendium.dnd5e.classfeatures.SCVjqRdlZ9cvHVSR", "Compendium.dnd5e.classfeatures.vt31lWAULygEl7yk"],
-    //  "3": ["Compendium.dnd5e.classfeatures.TH1QAf6YNGSeBVjT"],
-    //  "5": ["Compendium.dnd5e.classfeatures.XogoBnFWmCAHXppo", "Compendium.dnd5e.classfeatures.Kl6zifJ5OmdHlOi2"],
-    //  "7": ["Compendium.dnd5e.classfeatures.NlXslw4yAqmKZWtN"],
-    //  "9": ["Compendium.dnd5e.classfeatures.L94gyvNpUhUe0rwh"],
-    //  "11": ["Compendium.dnd5e.classfeatures.FqfmbPgxiyrWzhYk"],
-    //  "15": ["Compendium.dnd5e.classfeatures.l8tUhZ5Pecm9wz7I"],
-    //  "18": ["Compendium.dnd5e.classfeatures.Q1exex5ALteprrPo"],
-    //  "20": ["Compendium.dnd5e.classfeatures.jVU4AgqfrFaqgXns"]
+     "1": ["Compendium.dnd5e.aimeclassfeatures.IbwpRN4WVei4Igda", "Compendium.dnd5e.aimeclassfeatures.EHOUkUotFWt28ORO", "Compendium.dnd5e.aimeclassfeatures.VLAqoExKCuBnL75k"],
+     "2": ["Compendium.dnd5e.aimeclassfeatures.2i666pPq0PSmUHWd"],
+     "3": ["Compendium.dnd5e.aimeclassfeatures.UWrSkLrYNhLPbrjg"],
+     "4": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+     "5": ["Compendium.dnd5e.aimeclassfeatures.PGMm9d1y4BDjarT8"],
+		 "6": ["Compendium.dnd5e.aimeclassfeatures.jraNKgmjpD2XLsQZ"],
+		 "8": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+		 "12": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+		 "16": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+		 "19": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
    }
  },
  "slayer": {
