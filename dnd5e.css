@@ -112,6 +112,11 @@
   background: rgba(0, 0, 0, 0.1);
   border: 2px groove #eeede0;
 }
+.dnd5e button:hover,
+.dnd5e button:focus {
+  border: 1px solid #111;
+  box-shadow: 0 0 8px red;
+}
 .dnd5e label.checkbox {
   flex: auto;
   padding: 0;

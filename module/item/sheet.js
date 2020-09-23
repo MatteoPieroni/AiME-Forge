@@ -246,7 +246,8 @@ export default class ItemSheet5e extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     html.find(".damage-control").click(this._onDamageControl.bind(this));
-    html.find('.trait-selector.class-skills').click(this._onConfigureClassSkills.bind(this));
+		html.find('.trait-selector.class-skills').click(this._onConfigureClassSkills.bind(this));
+		html.find('#level-modifier').click(this._onLevelAdd.bind(this));
   }
 
   /* -------------------------------------------- */
@@ -303,5 +304,36 @@ export default class ItemSheet5e extends ItemSheet {
       minimum: skills.number,
       maximum: skills.number
     }).render(true)
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Add a level to the class
+   * @param {Event} event     The original click event
+   * @return {Promise}
+   * @private
+   */
+  async _onLevelAdd(event) {
+    event.preventDefault();
+		const a = event.target;
+		const isAddButton = a.classList.contains("add-level");
+		const isResetButton = a.classList.contains("reset-level");
+
+		if (!isAddButton && !isResetButton) {
+			return;
+		}
+
+		if (isResetButton && !window.confirm('Are you sure you want to reset the level?')) {
+			return;
+		}
+
+		await this._onSubmit(event);  // Submit any unsaved changes
+		const oldData = this.item.data.data;
+		const oldLevel = this.item.data.data.levels;
+
+		const newLevel = isAddButton ? oldLevel + 1 : 1;
+
+		return this.item.update({	...this.item.data, "data": { ...oldData, levels: newLevel } });
   }
 }

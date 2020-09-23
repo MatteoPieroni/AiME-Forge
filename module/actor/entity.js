@@ -199,15 +199,21 @@ export default class Actor5e extends Actor {
   /**
    * Return the features which a character is awarded for each class level
    * @param cls {Object}    Data object for class, equivalent to Item5e.data or raw compendium entry
+	 * @param options {Object} Object that defines whether class or level have changed
    * @return {Promise<Item5e[]>}     Array of Item5e entities
    */
-  static async getClassFeatures(cls) {
-		// TODO: allow for getting all features up to that level
+  static async getClassFeatures(cls, options = {}) {
     const level = cls.data.levels;
     const className = cls.name.toLowerCase();
 
     const clsConfig = CONFIG.DND5E.classFeatures[className];
-    let featureIDs = clsConfig["features"][level] || [];
+		let featureIDs = [];
+		
+		// prevents double features when changing subclass
+		if (!options.hasChangedSubclass) {
+			featureIDs = featureIDs.concat(clsConfig["features"][level] || []);
+		}
+
     const subclassName = cls.data.subclass.toLowerCase().slugify();
     if ( subclassName != "" ) {
       const subclassConfig = clsConfig["subclasses"][subclassName];
@@ -242,9 +248,13 @@ export default class Actor5e extends Actor {
     super.updateEmbeddedEntity(embeddedName, data, options);
 
     // Add class / subclass features
-    const item = this.data.items.find(i => i._id === data._id);
-    if ( item.type === "class" && (item.data.subclass != data.data.subclass || item.data.levels != data.data.levels) ) {
-      const features = await Actor5e.getClassFeatures(data);
+		const item = this.data.items.find(i => i._id === data._id);
+		const isClass = item.type === "class";
+		const hasChangedSubclass = item.data.subclass != data.data.subclass;
+		const hasChangedLevel = item.data.levels != data.data.levels;
+
+    if (isClass && (hasChangedSubclass || hasChangedLevel)) {
+      const features = await Actor5e.getClassFeatures(data, { hasChangedSubclass, hasChangedLevel });
       this.createEmbeddedEntity("OwnedItem", features);
     }
   }

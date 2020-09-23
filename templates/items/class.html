@@ -68,8 +68,11 @@
             {{!-- Class Levels --}}
             <div class="form-group">
                 <label>{{ localize "DND5E.ClassLevels" }}</label>
-                <div class="form-fields">
-                    <input type="text" name="data.levels" value="{{data.levels}}" data-dtype="Number"/>
+                <div id="level-modifier" class="form-fields">
+										<button class="reset-level" title="Reset to level 1"><i class="fas fa-minus-circle"></i></button>
+										<input type="text" disabled name="levels-ui" value="{{data.levels}}" data-dtype="Number" class="flex2"/>
+										<input type="text" hidden name="data.levels" value="{{data.levels}}" data-dtype="Number"/>
+										<button class="add-level flex2">Level up</button>
                 </div>
             </div>
 
