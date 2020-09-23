@@ -10,6 +10,8 @@ export const ClassFeatures = {
        "source": "MAN pg. 68",
        "features": {
          "3": ["Compendium.dnd5e.aimeclassfeatures.lxnRr36pLYTWF24L", "Compendium.dnd5e.aimeclassfeatures.okw3z2icLNrjzdXU"],
+         "14": ["Compendium.dnd5e.aimeclassfeatures.e91MKtVimeynNoRF"],
+         "18": ["Compendium.dnd5e.aimeclassfeatures.ndkGGrNRKRoR0w0O"],
        }
      },
    },
@@ -20,10 +22,13 @@ export const ClassFeatures = {
      "4": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
      "5": ["Compendium.dnd5e.aimeclassfeatures.PGMm9d1y4BDjarT8"],
 		 "6": ["Compendium.dnd5e.aimeclassfeatures.jraNKgmjpD2XLsQZ"],
-		 "8": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
-		 "12": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+		 "9": ["Compendium.dnd5e.aimeclassfeatures.xlHZN2ruVbirQ2zY"],
+		 "11": ["Compendium.dnd5e.aimeclassfeatures.jHAbQE7xSeyc2MYc"],
+		 "13": ["Compendium.dnd5e.aimeclassfeatures.7HQW0irvBzvgh6Pj"],
+		 "15": ["Compendium.dnd5e.aimeclassfeatures.s6KUf5BEY27C5hmV"],
+		 "17": ["Compendium.dnd5e.aimeclassfeatures.Hme8PSjpH41ge9b4"],
 		 "16": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
-		 "19": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+		 "20": ["Compendium.dnd5e.aimeclassfeatures.418WOxbRYulUr8HD"],
    }
  },
  "slayer": {
