@@ -41,10 +41,26 @@ export const ClassFeatures = {
      "foe-hammer": {
        "label": "Foe Hammer",
        "source": "MAN pg. 75",
-			 "features": {}
+			 "features": {
+				 "3": ["Compendium.dnd5e.aimeclassfeatures.dP8WnJWfLIq0KaIP"],
+				 "10": ["Compendium.dnd5e.aimeclassfeatures.q8l7QVfhryMGlbZA"],
+				 "14": ["Compendium.dnd5e.aimeclassfeatures.QJ5NaAN8hjPxrSuU"],
+			 }
      },
    },
    "features": {
+		 "1": ["Compendium.dnd5e.aimeclassfeatures.DsiaNvtLzVigb17h", "Compendium.dnd5e.aimeclassfeatures.YVvlB2F7lzBMq0Mq"],
+		 "2": ["Compendium.dnd5e.aimeclassfeatures.9UbrfYy42IVfEcsq"],
+		 "3": ["Compendium.dnd5e.aimeclassfeatures.llzdUX2V0VinpbNd"],
+		 "4": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+		 "5": ["Compendium.dnd5e.aimeclassfeatures.Mr547RJPwIHxUtuG", "Compendium.dnd5e.aimeclassfeatures.RM9Dd7w1MNbsTJtj"],
+		 "6": ["Compendium.dnd5e.aimeclassfeatures.dm0OSmzgpDMN4gIR"],
+		 "7": ["Compendium.dnd5e.aimeclassfeatures.i39hxfE6sHLaDtoB"],
+		 "9": ["Compendium.dnd5e.aimeclassfeatures.OEooOrIQHZYMyuPh"],
+		 "11": ["Compendium.dnd5e.aimeclassfeatures.iIFlQOZEdH7whI09"],
+		 "15": ["Compendium.dnd5e.aimeclassfeatures.ysVWT3fgmxk6L5WI"],
+		 "18": ["Compendium.dnd5e.aimeclassfeatures.vIg3DB41tDsvFZ8H"],
+		 "20": ["Compendium.dnd5e.aimeclassfeatures.nRzeDuES9KbPD5Nh"],
    }
  },
  "treasure-hunter": {
