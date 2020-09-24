@@ -61,22 +61,39 @@ export const ClassFeatures = {
 		 "15": ["Compendium.dnd5e.aimeclassfeatures.ysVWT3fgmxk6L5WI"],
 		 "18": ["Compendium.dnd5e.aimeclassfeatures.vIg3DB41tDsvFZ8H"],
 		 "20": ["Compendium.dnd5e.aimeclassfeatures.nRzeDuES9KbPD5Nh"],
-   }
- },
- "treasure-hunter": {
-   "subclasses": {
-     "agent": {
-       "label": "Agent",
-       "source": "MAN pg. 79",
-       "features": {}
-     },
-     "burglar": {
-       "label": "Burglar",
-       "source": "MAN pg. 80",
-       "features": {}
-     },
-   },
-   "features": {},
+		}
+	},
+	"treasure-hunter": {
+		"subclasses": {
+			"agent": {
+				"label": "Agent",
+				"source": "MAN pg. 79",
+				"features": {}
+			},
+			"burglar": {
+				"label": "Burglar",
+				"source": "MAN pg. 80",
+				"features": {
+					"3": ["Compendium.dnd5e.aimeclassfeatures.uOhLiLfYXJzC6PYT", "Compendium.dnd5e.aimeclassfeatures.uOhLiLfYXJzC6PYT", "Compendium.dnd5e.aimeclassfeatures.PB8BrfWGSpSiaIKf"],
+					"9": ["Compendium.dnd5e.aimeclassfeatures.PZ36GkKKFAnYVPPA"],
+					"13": ["Compendium.dnd5e.aimeclassfeatures.xmkV6WmSfrAvCDRG"],
+					"17": ["Compendium.dnd5e.aimeclassfeatures.YQtTpcFYVB0OpyHi"],
+				}
+			},
+		},
+		"features": {
+			"1": ["Compendium.dnd5e.aimeclassfeatures.ZMqLmgB8RQNjYrRV", "Compendium.dnd5e.aimeclassfeatures.ubZkylsQ35mj4bW4", "Compendium.dnd5e.aimeclassfeatures.waePfrVs59fOs29B"],
+			"2": ["Compendium.dnd5e.aimeclassfeatures.zD5RMOCYfY6rdUfJ"],
+			"3": ["Compendium.dnd5e.aimeclassfeatures.UePRz8unZoRqRD49"],
+			"4": ["Compendium.dnd5e.aimeclassfeatures.Xe4WZ4iZerKSf5Qw"],
+			"5": ["Compendium.dnd5e.aimeclassfeatures.AbezOyMRgM2ZG67E"],
+			"7": ["Compendium.dnd5e.aimeclassfeatures.UxF50oCfbpYTn08J"],
+			"11": ["Compendium.dnd5e.aimeclassfeatures.yNSGkbvTgqirM460"],
+			"14": ["Compendium.dnd5e.aimeclassfeatures.O5EN8L9JKbz1CLD5"],
+			"15": ["Compendium.dnd5e.aimeclassfeatures.5iZ310euiYfthZhT"],
+			"18": ["Compendium.dnd5e.aimeclassfeatures.fyMtuEFYHHWUe695"],
+			"20": ["Compendium.dnd5e.aimeclassfeatures.QTZu57zOmWbxYpzz"],
+		},
  },
  "wanderer": {
    "subclasses": {
