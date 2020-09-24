@@ -159,9 +159,25 @@ export const ClassFeatures = {
 			"weapon-master": {
 				"label": "Weapon Master",
 				"source": "MAN pg. 95",
-				"features": {}
+				"features": {
+					"3": ["pMkfZKyc7kVw8CFF", "VxVJ8tmpxzSCluhy"],
+					"7": ["pMkfZKyc7kVw8CFF"],
+					"10": ["pMkfZKyc7kVw8CFF"],
+					"15": ["pMkfZKyc7kVw8CFF"],
+					"18": ["pMkfZKyc7kVw8CFF"],
+				}
 			}
 		},
-		"features": {},
+		"features": {
+			"1": ["9pJ2hIxZdKMhGE34", "hudpvfnbC9JXJk7q"],
+			"2": ["QvjgDdEfOLsCaBls"],
+			"3": ["XoOJKHj1BuzfiHrc"],
+			"4": ["aFta23av3SigCZvj"],
+			"5": ["2CTUA6RAb0kalmnr"],
+			"9": ["cjFnL264eCreRnxp"],
+			"11": ["2CTUA6RAb0kalmnr"],
+			"13": ["iT98EzZnhg1x2hlp"],
+			"20": ["2CTUA6RAb0kalmnr"],
+		},
 	}
 };
