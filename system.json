@@ -70,6 +70,20 @@
       "system": "dnd5e",
       "path": "./packs/aimeclassfeatures.db",
       "entity": "Item"
+		},
+		{
+      "name": "aimeopenvirtues",
+      "label": "Open Virtues (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimeopenvirtues.db",
+      "entity": "Item"
+    },
+		{
+      "name": "aimeculturalvirtues",
+      "label": "Cultural Virtues (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimeculturalvirtues.db",
+      "entity": "Item"
     },
     {
       "name": "races",
