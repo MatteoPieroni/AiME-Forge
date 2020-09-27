@@ -30,6 +30,20 @@
       "entity": "Item"
 		},
     {
+      "name": "aimearmour",
+      "label": "Armour (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimearmour.db",
+      "entity": "Item"
+		},
+    {
+      "name": "aimeweapons",
+      "label": "Weapons (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimeweapons.db",
+      "entity": "Item"
+		},
+    {
       "name": "tradegoods",
       "label": "Trade Goods (SRD)",
       "system": "dnd5e",
