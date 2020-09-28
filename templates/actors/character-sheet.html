@@ -110,14 +110,16 @@
                 </li>
             </ul>
         </section>
-    </header>
+		</header>
 
     {{!-- NPC Sheet Navigation --}}
     <nav class="sheet-navigation tabs" data-group="primary">
         <a class="item active" data-tab="attributes">{{ localize "DND5E.Attributes" }}</a>
         <a class="item" data-tab="inventory">{{ localize "DND5E.Inventory" }}</a>
         <a class="item" data-tab="features">{{ localize "DND5E.Features" }}</a>
-        <a class="item" data-tab="spellbook">{{ localize "DND5E.Spellbook" }}</a>
+				{{#if actor.flags.dnd5e.magical}}
+					<a class="item" data-tab="spellbook">{{ localize "DND5E.Spellbook" }}</a>
+				{{/if}}
         <a class="item" data-tab="background">{{ localize "DND5E.Background" }}</a>
         <a class="item" data-tab="biography">{{ localize "DND5E.Biography" }}</a>
     </nav>

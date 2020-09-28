@@ -267,6 +267,8 @@
 "DND5E.FlagsRemarkableAthleteHint": "Half-Proficiency (rounded-up) to physical Ability Checks and Initiative.",
 "DND5E.FlagsCritThreshold": "Critical Hit Threshold",
 "DND5E.FlagsCritThresholdHint": "Allow for expanded critical range; for example Improved or Superior Critical",
+"DND5E.FlagsMagical": "Magical",
+"DND5E.FlagsMagicalHint": "Enables the Spells tab in the actor sheet",
 
 "DND5E.Flat": "Flat",
 "DND5E.Formula": "Formula",

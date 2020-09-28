@@ -737,6 +737,12 @@ DND5E.characterFlags = {
     section: "Feats",
     type: Boolean
   },
+  "magical": {
+    name: "DND5E.FlagsMagical",
+    hint: "DND5E.FlagsMagicalHint",
+    section: "Magical",
+    type: Boolean
+  },
   "weaponCriticalThreshold": {
     name: "DND5E.FlagsCritThreshold",
     hint: "DND5E.FlagsCritThresholdHint",
