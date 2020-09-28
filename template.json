@@ -277,11 +277,11 @@
           "value": 0,
           "min": 0,
           "max": 300
-        },
-        "trait": "",
-        "ideal": "",
-        "bond": "",
-        "flaw": ""
+				},
+        "hope": "",
+        "despair": "",
+        "quality": "",
+        "specialty": ""
       },
       "resources": {
         "primary": {
@@ -402,7 +402,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "equipment", "consumable", "tool", "loot", "class", "spell", "feat", "backpack"],
+    "types": ["weapon", "equipment", "consumable", "tool", "loot", "class", "spell", "feat", "backpack", "background"],
     "templates": {
       "itemDescription": {
         "description": {
@@ -536,6 +536,9 @@
         "value": null,
         "charged": false
       }
+    },
+    "background": {
+			"templates": ["itemDescription"]
     },
     "loot": {
       "templates": ["itemDescription", "physicalItem"]

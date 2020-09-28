@@ -13,11 +13,13 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/dnd5e/templates/actors/parts/actor-inventory.html",
     "systems/dnd5e/templates/actors/parts/actor-features.html",
     "systems/dnd5e/templates/actors/parts/actor-spellbook.html",
+    "systems/dnd5e/templates/actors/parts/actor-background.html",
 
     // Item Sheet Partials
     "systems/dnd5e/templates/items/parts/item-action.html",
     "systems/dnd5e/templates/items/parts/item-activation.html",
     "systems/dnd5e/templates/items/parts/item-description.html",
+    "systems/dnd5e/templates/items/parts/item-background-description.html",
     "systems/dnd5e/templates/items/parts/item-mountable.html"
   ];
 

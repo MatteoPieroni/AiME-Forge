@@ -99,6 +99,13 @@
       "path": "./packs/aimeculturalvirtues.db",
       "entity": "Item"
     },
+		{
+      "name": "aimebackgrounds",
+      "label": "Backgrounds (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimebackgrounds.db",
+      "entity": "Item"
+    },
     {
       "name": "races",
       "label": "Racial Features (SRD)",
