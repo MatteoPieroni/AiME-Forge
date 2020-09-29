@@ -123,7 +123,7 @@
           },
           "lor": {
             "value": 0,
-            "ability": "wis"
+            "ability": "int"
           },
           "med": {
             "value": 0,
@@ -151,7 +151,7 @@
           },
           "shl": {
             "value": 0,
-            "ability": "dex"
+            "ability": "int"
           },
           "slt": {
             "value": 0,
