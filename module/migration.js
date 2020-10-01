@@ -108,9 +108,10 @@ export const migrateActorData = function(actor) {
 
   // Actor Data Updates
   _migrateActorBonuses(actor, updateData);
+	_migrateActorSkills(actor, updateData);
 
   // Remove deprecated fields
-  _migrateRemoveDeprecated(actor, updateData);
+	_migrateRemoveDeprecated(actor, updateData);
 
   // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -223,6 +224,26 @@ function _migrateActorBonuses(actor, updateData) {
   for ( let k of Object.keys(actor.data.bonuses || {}) ) {
     if ( k in b ) updateData[`data.bonuses.${k}`] = b[k];
     else updateData[`data.bonuses.-=${k}`] = null;
+  }
+}
+
+/**
+ * Migrate the actor skills object to allow new base ability
+ * @private
+ */
+function _migrateActorSkills(actor, updateData) {
+	const updatedSkills = game.system.model.Actor.character.skills;
+	const previousSkills = actor.data.skills;
+
+  for ( let skill of Object.keys(actor.data.skills || {}) ) {
+    if (skill in updatedSkills) {
+			updateData[`data.skills.${skill}`] = {
+				...previousSkills[skill],
+				ability: updatedSkills[skill].ability
+			};
+		} else {
+			updateData[`data.skills.=${skill}`] = null;
+		}
   }
 }
 
