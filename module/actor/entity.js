@@ -292,6 +292,11 @@ export default class Actor5e extends Actor {
     const pct = Math.round((xp.value - prior) * 100 / required);
     xp.pct = Math.clamped(pct, 0, 100);
 
+		// Shadow points and miserable status
+		const shadowPointsSum = data.attributes.shadowpoints.permanent + data.attributes.shadowpoints.current;
+		const wisdomScore = data.abilities.wis.value;
+		data.attributes.miserable = shadowPointsSum > wisdomScore;
+
     // Inventory encumbrance
     data.attributes.encumbrance = this._computeEncumbrance(actorData);
   }
