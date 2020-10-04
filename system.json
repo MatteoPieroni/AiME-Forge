@@ -23,6 +23,13 @@
       "entity": "Actor"
     },
     {
+      "name": "aimemonsters",
+      "label": "Monsters (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemonsters.db",
+      "entity": "Actor"
+    },
+    {
       "name": "items",
       "label": "Items (SRD)",
       "system": "dnd5e",
@@ -118,6 +125,20 @@
       "label": "Monster Features (SRD)",
       "system": "dnd5e",
       "path": "./packs/monsterfeatures.db",
+      "entity": "Item"
+    },
+    {
+      "name": "aimemonsterfeatures",
+      "label": "Monster Features (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemonsterfeatures.db",
+      "entity": "Item"
+    },
+    {
+      "name": "aimemonsterweapons",
+      "label": "Monster Weapons (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemonsterweapons.db",
       "entity": "Item"
     },
     {
