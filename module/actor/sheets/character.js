@@ -176,7 +176,10 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
    */
 	activateListeners(html) {
     super.activateListeners(html);
-    if ( !this.options.editable ) return;
+		if ( !this.options.editable ) return;
+		
+		// Character Functions
+    html.find(".shadow-convert").click(this._onConvertShadowPoints.bind(this));
 
     // Inventory Functions
     html.find(".currency-convert").click(this._onConvertCurrency.bind(this));
@@ -259,6 +262,43 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
       title: `${game.i18n.localize("DND5E.CurrencyConvert")}`,
       content: `<p>${game.i18n.localize("DND5E.CurrencyConvertHint")}</p>`,
       yes: () => this.actor.convertCurrency()
+    });
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Convert current shadow points to 1 permanent shadow point
+   * @private
+   */
+  async _convertShadowPoints() {
+		const shadowPoints = this.actor.data.data.attributes.shadowpoints;
+
+		if (shadowPoints.current === 0) {
+			return;
+		}
+
+		const newShadowPoints = {
+			current: 0,
+			permanent: shadowPoints.permanent + 1,
+		};
+
+		this.actor.update({ 'data.attributes.shadowpoints': newShadowPoints })
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Handle mouse click event to convert current shadow points to 1 permanent shadow point
+   * @param {MouseEvent} event    The originating click event
+   * @private
+   */
+  async _onConvertShadowPoints(event) {
+    event.preventDefault();
+    return Dialog.confirm({
+      title: `${game.i18n.localize("DND5E.ShadowPointsConvert")}`,
+      content: `<p>${game.i18n.localize("DND5E.ShadowPointsConvertHint")}</p>`,
+      yes: () => this._convertShadowPoints()
     });
   }
 

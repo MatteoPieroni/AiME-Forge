@@ -267,7 +267,12 @@
         "encumbrance": {
           "value": null,
           "max": null
-        },
+				},
+				"shadowpoints": {
+					"permanent": 0,
+					"current": 0
+				},
+				"miserable": false,
         "exhaustion": 0,
         "inspiration": 0
       },

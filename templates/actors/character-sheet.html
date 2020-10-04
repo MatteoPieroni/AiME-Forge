@@ -198,6 +198,26 @@
                                    value="{{data.attributes.death.failure}}"/>
                         </div>
                     </div>
+                    <div class="counter flexrow shadow-points">
+                        <h4>
+													{{ localize "DND5E.ShadowPoints" }}
+													<a class="shadow-convert" title="Convert Shadow Points"><i class="fas fa-sync-alt"></i></a>
+												</h4>
+                        <div class="counter-value">
+													<span>Curr <input type="text" name="data.attributes.shadowpoints.current" data-dtype="Number" placeholder="0"
+														value="{{data.attributes.shadowpoints.current}}" /></span>
+													/
+													<span><input type="text" name="data.attributes.shadowpoints.permanent" data-dtype="Number" placeholder="0"
+                                   value="{{data.attributes.shadowpoints.permanent}}" /> Perm</span>
+                        </div>
+                    </div>
+                    <div class="counter flexrow miserable">
+                        <h4>{{ localize "DND5E.Miserable" }}</h4>
+                        <div class="counter-value">
+                            <input type="checkbox" name="data.attributes.miserable" data-dtype="Boolean"
+                                   {{checked data.attributes.miserable}}/>
+                        </div>
+                    </div>
                     <div class="counter flexrow exhaustion">
                         <h4>{{ localize "DND5E.Exhaustion" }}</h4>
                         <div class="counter-value">
