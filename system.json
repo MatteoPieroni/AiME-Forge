@@ -16,6 +16,13 @@
       "entity": "Actor"
     },
     {
+      "name": "aimeheroes",
+      "label": "Aime Legendary Heroes",
+      "system": "dnd5e",
+      "path": "./packs/aimelegendary.db",
+      "entity": "Actor"
+    },
+    {
       "name": "monsters",
       "label": "Monsters (SRD)",
       "system": "dnd5e",
@@ -147,6 +154,13 @@
       "system": "dnd5e",
       "path": "./packs/rules.db",
       "entity": "JournalEntry"
+    },
+    {
+      "name": "aimemaps",
+      "label": "Maps (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemaps.db",
+      "entity": "Scene"
     }
   ],
   "languages": [
