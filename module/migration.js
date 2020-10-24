@@ -54,7 +54,7 @@ export const migrateWorld = async function() {
   }
 
   // Set the migration as complete
-  game.settings.set("dnd5e", "systemMigrationVersion", game.system.data.version);
+  game.settings.set("aime", "systemMigrationVersion", game.system.data.version);
   ui.notifications.info(`DnD5E System Migration to version ${game.system.data.version} completed!`, {permanent: true});
 };
 
@@ -157,8 +157,8 @@ function cleanActorData(actorData) {
     obj[f] = null;
     return obj;
   }, {});
-  if ( actorData.flags.dnd5e ) {
-    actorData.flags.dnd5e = filterObject(actorData.flags.dnd5e, allowedFlags);
+  if ( actorData.flags.aime ) {
+    actorData.flags.aime = filterObject(actorData.flags.aime, allowedFlags);
   }
 
   // Return the scrubbed data
