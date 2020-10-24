@@ -59,7 +59,7 @@ export async function d20Roll({parts=[], data={}, event={}, rollMode=null, templ
     if (adv === 1) {
       nd = elvenAccuracy ? 3 : 2;
       messageData.flavor += ` (${game.i18n.localize("DND5E.Advantage")})`;
-      if ( "flags.dnd5e.roll" in messageData ) messageData["flags.dnd5e.roll"].advantage = true;
+      if ( "flags.aime.roll" in messageData ) messageData["flags.aime.roll"].advantage = true;
       mods += "kh";
     }
 
@@ -67,7 +67,7 @@ export async function d20Roll({parts=[], data={}, event={}, rollMode=null, templ
     else if (adv === -1) {
       nd = 2;
       messageData.flavor += ` (${game.i18n.localize("DND5E.Disadvantage")})`;
-      if ( "flags.dnd5e.roll" in messageData ) messageData["flags.dnd5e.roll"].disadvantage = true;
+      if ( "flags.aime.roll" in messageData ) messageData["flags.aime.roll"].disadvantage = true;
       mods += "kl";
     }
 
@@ -140,7 +140,7 @@ export async function d20Roll({parts=[], data={}, event={}, rollMode=null, templ
 async function _d20RollDialog({template, title, parts, data, rollMode, dialogOptions, roll}={}) {
 
   // Render modal dialog
-  template = template || "systems/dnd5e/templates/chat/roll-dialog.html";
+  template = template || "systems/aime/templates/chat/roll-dialog.html";
   let dialogData = {
     formula: parts.join(" + "),
     data: data,
@@ -228,13 +228,13 @@ export async function damageRoll({parts, actor, data, event={}, rollMode=null, t
 
     // Modify the damage formula for critical hits
     if ( crit === true ) {
-      let add = (actor && actor.getFlag("dnd5e", "savageAttacks")) ? 1 : 0;
+      let add = (actor && actor.getFlag("aime", "savageAttacks")) ? 1 : 0;
       let mult = 2;
       // TODO Backwards compatibility - REMOVE LATER
       if (isNewerVersion(game.data.version, "0.6.9")) roll.alter(mult, add);
       else roll.alter(add, mult);
       messageData.flavor += ` (${game.i18n.localize("DND5E.Critical")})`;
-      if ( "flags.dnd5e.roll" in messageData ) messageData["flags.dnd5e.roll"].critical = true;
+      if ( "flags.aime.roll" in messageData ) messageData["flags.aime.roll"].critical = true;
     }
 
     // Execute the roll
@@ -268,7 +268,7 @@ export async function damageRoll({parts, actor, data, event={}, rollMode=null, t
 async function _damageRollDialog({template, title, parts, data, allowCritical, rollMode, dialogOptions, roll}={}) {
 
   // Render modal dialog
-  template = template || "systems/dnd5e/templates/chat/roll-dialog.html";
+  template = template || "systems/aime/templates/chat/roll-dialog.html";
   let dialogData = {
     formula: parts.join(" + "),
     data: data,

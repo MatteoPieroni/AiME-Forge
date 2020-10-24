@@ -44,7 +44,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
     }, []);
 
     // Experience Tracking
-    sheetData["disableExperience"] = game.settings.get("dnd5e", "disableExperienceTracking");
+    sheetData["disableExperience"] = game.settings.get("aime", "disableExperienceTracking");
     sheetData["classLabels"] = this.actor.itemTypes.class.map(c => c.name).join(", ");
 
     // Return data for rendering

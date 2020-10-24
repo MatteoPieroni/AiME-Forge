@@ -15,7 +15,7 @@ export default class Actor5e extends Actor {
    * @return {boolean}
    */
   get isPolymorphed() {
-    return this.getFlag("dnd5e", "isPolymorphed") || false;
+    return this.getFlag("aime", "isPolymorphed") || false;
   }
 
   /* -------------------------------------------- */
@@ -87,7 +87,7 @@ export default class Actor5e extends Actor {
   prepareDerivedData() {
     const actorData = this.data;
     const data = actorData.data;
-    const flags = actorData.flags.dnd5e || {};
+    const flags = actorData.flags.aime || {};
     const bonuses = getProperty(data, "bonuses.abilities") || {};
 
     // Retrieve data for polymorphed actors
@@ -344,7 +344,7 @@ export default class Actor5e extends Actor {
     if (actorData.type === 'vehicle') return;
 
     const data = actorData.data;
-    const flags = actorData.flags.dnd5e || {};
+    const flags = actorData.flags.aime || {};
 
     // Skill modifiers
     const feats = DND5E.characterFlags;
@@ -487,7 +487,7 @@ export default class Actor5e extends Actor {
     }, 0);
 
     // [Optional] add Currency Weight
-    if ( game.settings.get("dnd5e", "currencyWeight") ) {
+    if ( game.settings.get("aime", "currencyWeight") ) {
       const currency = actorData.data.currency;
       const numCoins = Object.values(currency).reduce((val, denom) => val += Math.max(denom, 0), 0);
       weight += Math.round((numCoins * 10) / CONFIG.DND5E.encumbrance.currencyPerWeight) / 10;
@@ -502,7 +502,7 @@ export default class Actor5e extends Actor {
       huge: 4,
       grg: 8
     }[actorData.data.traits.size] || 1;
-    if ( this.getFlag("dnd5e", "powerfulBuild") ) mod = Math.min(mod * 2, 8);
+    if ( this.getFlag("aime", "powerfulBuild") ) mod = Math.min(mod * 2, 8);
 
     // Compute Encumbrance percentage
     const max = actorData.data.abilities.str.value * CONFIG.DND5E.encumbrance.strMultiplier * mod;
@@ -723,16 +723,16 @@ export default class Actor5e extends Actor {
     }
 
     // Reliable Talent applies to any skill check we have full or better proficiency in
-    const reliableTalent = (skl.value >= 1 && this.getFlag("dnd5e", "reliableTalent"));
+    const reliableTalent = (skl.value >= 1 && this.getFlag("aime", "reliableTalent"));
 
     // Roll and return
     const rollData = mergeObject(options, {
       parts: parts,
       data: data,
       title: game.i18n.format("DND5E.SkillPromptTitle", {skill: CONFIG.DND5E.skills[skillId]}),
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("aime", "halflingLucky"),
       reliableTalent: reliableTalent,
-      messageData: {"flags.dnd5e.roll": {type: "skill", skillId }}
+      messageData: {"flags.aime.roll": {type: "skill", skillId }}
     });
     rollData.speaker = options.speaker || ChatMessage.getSpeaker({actor: this});
     return d20Roll(rollData);
@@ -782,7 +782,7 @@ export default class Actor5e extends Actor {
     const data = {mod: abl.mod};
 
     // Add feat-related proficiency bonuses
-    const feats = this.data.flags.dnd5e || {};
+    const feats = this.data.flags.aime || {};
     if ( feats.remarkableAthlete && DND5E.characterFlags.remarkableAthlete.abilities.includes(abilityId) ) {
       parts.push("@proficiency");
       data.proficiency = Math.ceil(0.5 * this.data.data.attributes.prof);
@@ -810,7 +810,7 @@ export default class Actor5e extends Actor {
       data: data,
       title: game.i18n.format("DND5E.AbilityPromptTitle", {ability: label}),
       halflingLucky: feats.halflingLucky,
-      messageData: {"flags.dnd5e.roll": {type: "ability", abilityId }}
+      messageData: {"flags.aime.roll": {type: "ability", abilityId }}
     });
     rollData.speaker = options.speaker || ChatMessage.getSpeaker({actor: this});
     return d20Roll(rollData);
@@ -856,8 +856,8 @@ export default class Actor5e extends Actor {
       parts: parts,
       data: data,
       title: game.i18n.format("DND5E.SavePromptTitle", {ability: label}),
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
-      messageData: {"flags.dnd5e.roll": {type: "save", abilityId }}
+      halflingLucky: this.getFlag("aime", "halflingLucky"),
+      messageData: {"flags.aime.roll": {type: "save", abilityId }}
     });
     rollData.speaker = options.speaker || ChatMessage.getSpeaker({actor: this});
     return d20Roll(rollData);
@@ -897,9 +897,9 @@ export default class Actor5e extends Actor {
       data: data,
       title: game.i18n.localize("DND5E.DeathSavingThrow"),
       speaker: speaker,
-      halflingLucky: this.getFlag("dnd5e", "halflingLucky"),
+      halflingLucky: this.getFlag("aime", "halflingLucky"),
       targetValue: 10,
-      messageData: {"flags.dnd5e.roll": {type: "death"}}
+      messageData: {"flags.aime.roll": {type: "death"}}
     });
     rollData.speaker = speaker;
     const roll = await d20Roll(rollData);
@@ -997,7 +997,7 @@ export default class Actor5e extends Actor {
       allowcritical: false,
       fastForward: !dialog,
       dialogOptions: {width: 350},
-      messageData: {"flags.dnd5e.roll": {type: "hitDie"}}
+      messageData: {"flags.aime.roll": {type: "hitDie"}}
     });
     if ( !roll ) return null;
 
@@ -1075,7 +1075,7 @@ export default class Actor5e extends Actor {
 
     // Display a Chat Message summarizing the rest effects
     let restFlavor;
-    switch (game.settings.get("dnd5e", "restVariant")) {
+    switch (game.settings.get("aime", "restVariant")) {
       case 'normal': restFlavor = game.i18n.localize("DND5E.ShortRestNormal"); break;
       case 'gritty': restFlavor = game.i18n.localize(newDay ? "DND5E.ShortRestOvernight" : "DND5E.ShortRestGritty"); break;
       case 'epic':  restFlavor = game.i18n.localize("DND5E.ShortRestEpic"); break;
@@ -1184,7 +1184,7 @@ export default class Actor5e extends Actor {
 
     // Display a Chat Message summarizing the rest effects
     let restFlavor;
-    switch (game.settings.get("dnd5e", "restVariant")) {
+    switch (game.settings.get("aime", "restVariant")) {
       case 'normal': restFlavor = game.i18n.localize(newDay ? "DND5E.LongRestOvernight" : "DND5E.LongRestNormal"); break;
       case 'gritty': restFlavor = game.i18n.localize("DND5E.LongRestGritty"); break;
       case 'epic':  restFlavor = game.i18n.localize("DND5E.LongRestEpic"); break;
@@ -1252,15 +1252,15 @@ export default class Actor5e extends Actor {
     keepItems=false, keepBio=false, keepVision=false, transformTokens=true}={}) {
 
     // Ensure the player is allowed to polymorph
-    const allowed = game.settings.get("dnd5e", "allowPolymorphing");
+    const allowed = game.settings.get("aime", "allowPolymorphing");
     if ( !allowed && !game.user.isGM ) {
       return ui.notifications.warn(game.i18n.localize("DND5E.PolymorphWarn"));
     }
 
     // Get the original Actor data and the new source data
     const o = duplicate(this.data);
-    o.flags.dnd5e = o.flags.dnd5e || {};
-    o.flags.dnd5e.transformOptions = {mergeSkills, mergeSaves};
+    o.flags.aime = o.flags.aime || {};
+    o.flags.aime.transformOptions = {mergeSkills, mergeSaves};
     const source = duplicate(target.data);
 
     // Prepare new data to merge from the source
@@ -1346,8 +1346,8 @@ export default class Actor5e extends Actor {
     if (keepVision) d.data.traits.senses = o.data.traits.senses;
 
     // Set new data flags
-    if ( !this.isPolymorphed || !d.flags.dnd5e.originalActor ) d.flags.dnd5e.originalActor = this.id;
-    d.flags.dnd5e.isPolymorphed = true;
+    if ( !this.isPolymorphed || !d.flags.aime.originalActor ) d.flags.aime.originalActor = this.id;
+    d.flags.aime.isPolymorphed = true;
 
     // Update unlinked Tokens in place since they can simply be re-dropped from the base actor
     if (this.isToken) {
@@ -1436,7 +1436,7 @@ export default class Actor5e extends Actor {
         return actor.revertOriginalForm();
       },
       condition: li => {
-        const allowed = game.settings.get("dnd5e", "allowPolymorphing");
+        const allowed = game.settings.get("aime", "allowPolymorphing");
         if ( !allowed && !game.user.isGM ) return false;
         const actor = game.actors.get(li.data('entityId'));
         return actor && actor.isPolymorphed;
