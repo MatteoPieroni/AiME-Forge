@@ -140,7 +140,7 @@ Hooks.once("setup", function() {
  */
 Hooks.once("ready", function() {
   // Determine whether a system migration is required and feasible
-  const currentVersion = game.settings.get("dnd5e", "systemMigrationVersion");
+  const currentVersion = game.settings.get("aime", "systemMigrationVersion");
   const NEEDS_MIGRATION_VERSION = 0.97;
   const COMPATIBLE_MIGRATION_VERSION = 0.96;
   let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null);
@@ -164,7 +164,7 @@ Hooks.once("ready", function() {
 Hooks.on("canvasInit", function() {
 
   // Extend Diagonal Measurement
-  canvas.grid.diagonalRule = game.settings.get("dnd5e", "diagonalMovement");
+  canvas.grid.diagonalRule = game.settings.get("aime", "diagonalMovement");
   SquareGrid.prototype.measureDistances = measureDistances;
 
   // Extend Token Resource Bars
@@ -185,7 +185,7 @@ Hooks.on("renderChatMessage", (app, html, data) => {
   chat.highlightCriticalSuccessFailure(app, html, data);
 
   // Optionally collapse the content
-  if (game.settings.get("dnd5e", "autoCollapseItemCards")) html.find(".card-content").hide();
+  if (game.settings.get("aime", "autoCollapseItemCards")) html.find(".card-content").hide();
 });
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 Hooks.on("renderChatLog", (app, html, data) => Item5e.chatListeners(html));
