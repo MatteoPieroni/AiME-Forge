@@ -123,7 +123,7 @@
           },
           "lor": {
             "value": 0,
-            "ability": "wis"
+            "ability": "int"
           },
           "med": {
             "value": 0,
@@ -151,7 +151,7 @@
           },
           "shl": {
             "value": 0,
-            "ability": "dex"
+            "ability": "int"
           },
           "slt": {
             "value": 0,
@@ -267,7 +267,12 @@
         "encumbrance": {
           "value": null,
           "max": null
-        },
+				},
+				"shadowpoints": {
+					"permanent": 0,
+					"current": 0
+				},
+				"miserable": false,
         "exhaustion": 0,
         "inspiration": 0
       },
@@ -277,11 +282,11 @@
           "value": 0,
           "min": 0,
           "max": 300
-        },
-        "trait": "",
-        "ideal": "",
-        "bond": "",
-        "flaw": ""
+				},
+        "hope": "",
+        "despair": "",
+        "quality": "",
+        "specialty": ""
       },
       "resources": {
         "primary": {
@@ -402,7 +407,7 @@
     }
   },
   "Item": {
-    "types": ["weapon", "equipment", "consumable", "tool", "loot", "class", "spell", "feat", "backpack"],
+    "types": ["weapon", "equipment", "consumable", "tool", "loot", "class", "spell", "feat", "backpack", "background"],
     "templates": {
       "itemDescription": {
         "description": {
@@ -536,6 +541,9 @@
         "value": null,
         "charged": false
       }
+    },
+    "background": {
+			"templates": ["itemDescription"]
     },
     "loot": {
       "templates": ["itemDescription", "physicalItem"]

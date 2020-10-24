@@ -2,7 +2,7 @@
   "name": "dnd5e",
   "title": "DnD5e - Fifth Edition System",
   "description": "A system for playing the fifth edition of the worlds most popular roleplaying game in the Foundry Virtual Tabletop environment.",
-  "version": 0.96,
+  "version": 0.99,
   "author": "Atropos",
   "scripts": [],
   "esmodules": ["dnd5e.js"],
@@ -16,10 +16,24 @@
       "entity": "Actor"
     },
     {
+      "name": "aimeheroes",
+      "label": "Aime Legendary Heroes",
+      "system": "dnd5e",
+      "path": "./packs/aimelegendary.db",
+      "entity": "Actor"
+    },
+    {
       "name": "monsters",
       "label": "Monsters (SRD)",
       "system": "dnd5e",
       "path": "./packs/monsters.db",
+      "entity": "Actor"
+    },
+    {
+      "name": "aimemonsters",
+      "label": "Monsters (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemonsters.db",
       "entity": "Actor"
     },
     {
@@ -99,6 +113,13 @@
       "path": "./packs/aimeculturalvirtues.db",
       "entity": "Item"
     },
+		{
+      "name": "aimebackgrounds",
+      "label": "Backgrounds (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimebackgrounds.db",
+      "entity": "Item"
+    },
     {
       "name": "races",
       "label": "Racial Features (SRD)",
@@ -114,11 +135,32 @@
       "entity": "Item"
     },
     {
+      "name": "aimemonsterfeatures",
+      "label": "Monster Features (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemonsterfeatures.db",
+      "entity": "Item"
+    },
+    {
+      "name": "aimemonsterweapons",
+      "label": "Monster Weapons (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemonsterweapons.db",
+      "entity": "Item"
+    },
+    {
       "name": "rules",
       "label": "Rules (SRD)",
       "system": "dnd5e",
       "path": "./packs/rules.db",
       "entity": "JournalEntry"
+    },
+    {
+      "name": "aimemaps",
+      "label": "Maps (AIME)",
+      "system": "dnd5e",
+      "path": "./packs/aimemaps.db",
+      "entity": "Scene"
     }
   ],
   "languages": [

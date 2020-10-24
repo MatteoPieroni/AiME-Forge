@@ -631,31 +631,18 @@ DND5E.conditionTypes = {
 
 // Languages
 DND5E.languages = {
-  "common": "DND5E.LanguagesCommon",
-  "aarakocra": "DND5E.LanguagesAarakocra",
-  "abyssal": "DND5E.LanguagesAbyssal",
-  "aquan": "DND5E.LanguagesAquan",
-  "auran": "DND5E.LanguagesAuran",
-  "celestial": "DND5E.LanguagesCelestial",
-  "deep": "DND5E.LanguagesDeepSpeech",
-  "draconic": "DND5E.LanguagesDraconic",
-  "druidic": "DND5E.LanguagesDruidic",
+  "westron": "DND5E.LanguagesWestron",
+  "quenya": "DND5E.LanguagesQuenya",
+  "dalish": "DND5E.LanguagesDalish",
+  "vale-of-anduin-tongue": "DND5E.LanguagesValeAnduin",
+  "sindarin": "DND5E.LanguagesSindarin",
   "dwarvish": "DND5E.LanguagesDwarvish",
-  "elvish": "DND5E.LanguagesElvish",
-  "giant": "DND5E.LanguagesGiant",
-  "gith": "DND5E.LanguagesGith",
-  "gnomish": "DND5E.LanguagesGnomish",
-  "goblin": "DND5E.LanguagesGoblin",
-  "gnoll": "DND5E.LanguagesGnoll",
-  "halfling": "DND5E.LanguagesHalfling",
-  "ignan": "DND5E.LanguagesIgnan",
-  "infernal": "DND5E.LanguagesInfernal",
-  "orc": "DND5E.LanguagesOrc",
-  "primordial": "DND5E.LanguagesPrimordial",
-  "sylvan": "DND5E.LanguagesSylvan",
-  "terran": "DND5E.LanguagesTerran",
-  "cant": "DND5E.LanguagesThievesCant",
-  "undercommon": "DND5E.LanguagesUndercommon"
+  "woodland-tongue": "DND5E.LanguagesWoodland",
+  "rohan-tongue": "DND5E.LanguagesRohan",
+  "orkish": "DND5E.LanguagesOrkish",
+  "silvan": "DND5E.LanguagesSilvan",
+  "wargspeech": "DND5E.LanguagesWargspeech",
+  "mordor": "DND5E.LanguagesMordor",
 };
 
 // Character Level XP Requirements
@@ -735,6 +722,12 @@ DND5E.characterFlags = {
     hint: "DND5E.FlagsRemarkableAthleteHint",
     abilities: ['str','dex','con'],
     section: "Feats",
+    type: Boolean
+  },
+  "magical": {
+    name: "DND5E.FlagsMagical",
+    hint: "DND5E.FlagsMagicalHint",
+    section: "Magical",
     type: Boolean
   },
   "weaponCriticalThreshold": {

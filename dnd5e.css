@@ -1016,6 +1016,10 @@
 .dnd5e.sheet.actor .editor {
   padding: 0 8px;
 }
+.dnd5e.sheet.actor .small-editor {
+	height: 100px;
+	max-height: none;
+}
 .dnd5e.sheet.item {
   min-height: 420px;
   /* ----------------------------------------- */

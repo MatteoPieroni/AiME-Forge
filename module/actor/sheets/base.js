@@ -19,7 +19,8 @@ export default class ActorSheet5e extends ActorSheet {
     this._filters = {
       inventory: new Set(),
       spellbook: new Set(),
-      features: new Set()
+			features: new Set(),
+			bgs: new Set(),
     };
   }
 
@@ -163,7 +164,7 @@ export default class ActorSheet5e extends ActorSheet {
     };
 
     // Format a spellbook entry for a certain indexed level
-    const registerSection = (sl, i, label, {prepMode="prepared", level={}}={}) => {
+    const registerSection = (sl, i, label, {prepMode="prepared", levels={}}={}) => {
       spellbook[i] = {
         order: i,
         label: label,
@@ -171,9 +172,9 @@ export default class ActorSheet5e extends ActorSheet {
         canCreate: owner,
         canPrepare: (data.actor.type === "character") && (i >= 1),
         spells: [],
-        uses: useLabels[i] || level.value || 0,
-        slots: useLabels[i] || level.max || 0,
-        override: level.override || 0,
+        uses: useLabels[i] || levels.value || 0,
+        slots: useLabels[i] || levels.max || 0,
+        override: levels.override || 0,
         dataset: {"type": "spell", "level": prepMode in sections ? 1 : i, "preparation.mode": prepMode},
         prop: sl
       };
