@@ -1,9 +1,9 @@
 {
-  "name": "dnd5e",
+  "name": "aime",
   "title": "DnD5e - Fifth Edition System",
   "description": "A system for playing the fifth edition of the worlds most popular roleplaying game in the Foundry Virtual Tabletop environment.",
   "version": 0.99,
-  "author": "Atropos",
+  "author": "Matteo Pieroni",
   "scripts": [],
   "esmodules": ["dnd5e.js"],
   "styles": ["dnd5e.css"],
@@ -11,154 +11,154 @@
     {
       "name": "heroes",
       "label": "Starter Heroes",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/heroes.db",
       "entity": "Actor"
     },
     {
       "name": "aimeheroes",
       "label": "Aime Legendary Heroes",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimelegendary.db",
       "entity": "Actor"
     },
     {
       "name": "monsters",
       "label": "Monsters (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/monsters.db",
       "entity": "Actor"
     },
     {
       "name": "aimemonsters",
       "label": "Monsters (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimemonsters.db",
       "entity": "Actor"
     },
     {
       "name": "items",
       "label": "Items (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/items.db",
       "entity": "Item"
 		},
     {
       "name": "aimearmour",
       "label": "Armour (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimearmour.db",
       "entity": "Item"
 		},
     {
       "name": "aimeweapons",
       "label": "Weapons (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimeweapons.db",
       "entity": "Item"
 		},
     {
       "name": "tradegoods",
       "label": "Trade Goods (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/tradegoods.db",
       "entity": "Item"
     },
     {
       "name": "spells",
       "label": "Spells (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/spells.db",
       "entity": "Item"
     },
     {
       "name": "classes",
       "label": "Classes (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/classes.db",
       "entity": "Item"
     },
 		{
       "name": "aimeclasses",
       "label": "Classes (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimeclasses.db",
       "entity": "Item"
     },
     {
       "name": "classfeatures",
       "label": "Class Features (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/classfeatures.db",
       "entity": "Item"
     },
 		{
       "name": "aimeclassfeatures",
       "label": "Class Features (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimeclassfeatures.db",
       "entity": "Item"
 		},
 		{
       "name": "aimeopenvirtues",
       "label": "Open Virtues (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimeopenvirtues.db",
       "entity": "Item"
     },
 		{
       "name": "aimeculturalvirtues",
       "label": "Cultural Virtues (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimeculturalvirtues.db",
       "entity": "Item"
     },
 		{
       "name": "aimebackgrounds",
       "label": "Backgrounds (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimebackgrounds.db",
       "entity": "Item"
     },
     {
       "name": "races",
       "label": "Racial Features (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/races.db",
       "entity": "Item"
     },
     {
       "name": "monsterfeatures",
       "label": "Monster Features (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/monsterfeatures.db",
       "entity": "Item"
     },
     {
       "name": "aimemonsterfeatures",
       "label": "Monster Features (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimemonsterfeatures.db",
       "entity": "Item"
     },
     {
       "name": "aimemonsterweapons",
       "label": "Monster Weapons (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimemonsterweapons.db",
       "entity": "Item"
     },
     {
       "name": "rules",
       "label": "Rules (SRD)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/rules.db",
       "entity": "JournalEntry"
     },
     {
       "name": "aimemaps",
       "label": "Maps (AIME)",
-      "system": "dnd5e",
+      "system": "aime",
       "path": "./packs/aimemaps.db",
       "entity": "Scene"
     }
