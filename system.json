@@ -1,8 +1,8 @@
 {
   "name": "aime",
-  "title": "DnD5e - Fifth Edition System",
-  "description": "A system for playing the fifth edition of the worlds most popular roleplaying game in the Foundry Virtual Tabletop environment.",
-  "version": 0.99,
+  "title": "Adventures in Middle Earth system - Based on DnD5e system",
+  "description": "A system for playing the Adventure in Middle Earth RPG based on the fifth edition system in the Foundry Virtual Tabletop environment.",
+  "version": 0.100,
   "author": "Matteo Pieroni",
   "scripts": [],
   "esmodules": ["dnd5e.js"],
@@ -177,7 +177,7 @@
   "secondaryTokenAttribute": null,
   "minimumCoreVersion": "0.5.6",
   "compatibleCoreVersion": "0.7.2",
-  "url": "https://gitlab.com/foundrynet/dnd5e",
-  "manifest": "https://gitlab.com/foundrynet/dnd5e/raw/master/system.json",
-  "download": "https://gitlab.com/foundrynet/dnd5e/-/archive/release-0.9.6/dnd5e-release-0.9.6.zip"
+  "url": "https://github.com/MatteoPieroni/AiME-Forge",
+  "manifest": "https://raw.githubusercontent.com/MatteoPieroni/AiME-Forge/main/system.json",
+  "download": "https://github.com/MatteoPieroni/AiME-Forge/archive/0.100.0.zip"
 }
