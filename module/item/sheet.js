@@ -32,7 +32,7 @@ export default class ItemSheet5e extends ItemSheet {
 
   /** @override */
   get template() {
-    const path = "systems/dnd5e/templates/items/";
+    const path = "systems/aime/templates/items/";
     return `${path}/${this.item.data.type}.html`;
   }
 
