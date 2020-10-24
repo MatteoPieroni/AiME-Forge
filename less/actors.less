@@ -234,7 +234,7 @@
     margin: 0 5px 0;
     padding: 3px 0 2px;
     border: @borderGroove;
-		border-radius: 3px;
+    border-radius: 3px;
 		overflow: auto;
 
     li.skill {
@@ -304,14 +304,14 @@
         }
       }
 
-      input[type="text"] {
+      input[type="text"],
+      input[type="number"] {
         height: 20px;
         max-width: 20px;
         margin: 0;
         padding: 0;
         text-align: center;
       }
-
       input[type="checkbox"] {
         position: relative;
         width: 16px;
@@ -319,7 +319,6 @@
         margin: 0;
         top: 4px;
       }
-
       span.sep {
         font-size: 12px;
       }
@@ -423,6 +422,7 @@
     padding: 0 5px;
     overflow-y: auto;
     scrollbar-width: thin;
+    color: @colorTan;
 
     // Inventory Item
     .item {
@@ -450,10 +450,10 @@
         }
 
         &.rollable:hover .item-image {
-          background-image: url("/icons/svg/d20-grey.svg") !important;
+          background-image: url("../../icons/svg/d20-grey.svg") !important;
         }
         &.rollable .item-image:hover {
-          background-image: url("/icons/svg/d20-black.svg") !important;
+          background-image: url("../../icons/svg/d20-black.svg") !important;
         }
 
         i.attuned {
@@ -486,6 +486,7 @@
     .inventory-header {
       margin: 2px 0;
       padding: 0;
+      align-items: center;
       background: rgba(0, 0, 0, 0.05);
       border: @borderGroove;
       font-weight: bold;
@@ -501,6 +502,11 @@
       .item-controls a.item-create {
         flex: 0 0 100%;
       }
+    }
+
+    // Item names
+    .item-name {
+      color: @colorDark;
     }
 
     // Item Detail Sections
@@ -691,12 +697,50 @@
   .spellbook-empty .item-controls { flex: 1; }
 
   /* ----------------------------------------- */
+  /*  Active Effects                           */
+  /* ----------------------------------------- */
+
+  .effects {
+    .effect-name{
+      flex: 2;
+      align-items: center;
+      color: @colorDark;
+      h4 { margin: 0; }
+    }
+
+    .effect-icon {
+      flex: 0 0 30px;
+      height: 30px;
+      margin-right: 5px;
+      border: none;
+    }
+
+    .effect-source,
+    .effect-duration {
+      text-align: center;
+      border-left: 1px solid @colorFaint;
+      border-right: 1px solid @colorFaint;
+    }
+
+    .effect-controls {
+      flex: 0 0 60px;
+      text-align: right;
+    }
+
+    .effect {
+      align-items: center;
+      border-bottom: 1px solid @colorFaint;
+      &:last-child { border-bottom: none; }
+    }
+  }
+
+  /* ----------------------------------------- */
   /*  TinyMCE                                  */
   /* ----------------------------------------- */
 
   .editor {
     padding: 0 8px;
-	}
+  }
 
 	.small-editor {
 		height: 100px;

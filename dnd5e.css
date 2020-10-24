@@ -82,6 +82,7 @@
   color: #191813;
 }
 .dnd5e input[type="text"],
+.dnd5e input[type="number"],
 .dnd5e select {
   height: calc(100% - 2px);
   border: 1px solid #7a7971;
@@ -89,7 +90,9 @@
   color: #191813;
 }
 .dnd5e input[type="text"]:hover,
-.dnd5e input[type="text"]:focus {
+.dnd5e input[type="number"]:hover,
+.dnd5e input[type="text"]:focus,
+.dnd5e input[type="number"]:focus {
   border: 1px solid #111;
   box-shadow: 0 0 8px red;
 }
@@ -111,11 +114,6 @@
 .dnd5e button {
   background: rgba(0, 0, 0, 0.1);
   border: 2px groove #eeede0;
-}
-.dnd5e button:hover,
-.dnd5e button:focus {
-  border: 1px solid #111;
-  box-shadow: 0 0 8px red;
 }
 .dnd5e label.checkbox {
   flex: auto;
@@ -236,12 +234,15 @@
   overflow-y: auto;
   align-content: flex-start;
 }
-.dnd5e.sheet input[type="text"] {
+.dnd5e.sheet input[type="text"],
+.dnd5e.sheet input[type="number"] {
   background: none;
   border: 1px solid transparent;
 }
 .dnd5e.sheet input[type="text"]:hover,
-.dnd5e.sheet input[type="text"]:focus {
+.dnd5e.sheet input[type="number"]:hover,
+.dnd5e.sheet input[type="text"]:focus,
+.dnd5e.sheet input[type="number"]:focus {
   border: 1px solid #111;
 }
 .dnd5e.sheet select {
@@ -432,6 +433,9 @@
   /*  Spellbook                                */
   /* ----------------------------------------- */
   /* ----------------------------------------- */
+  /*  Active Effects                           */
+  /* ----------------------------------------- */
+  /* ----------------------------------------- */
   /*  TinyMCE                                  */
   /* ----------------------------------------- */
 }
@@ -612,7 +616,7 @@
   margin: 0 5px 0;
   padding: 3px 0 2px;
   border: 2px groove #eeede0;
-	border-radius: 3px;
+  border-radius: 3px;
 	overflow: auto;
 }
 .dnd5e.sheet.actor ul.skills-list li.skill {
@@ -668,7 +672,8 @@
 .dnd5e.sheet.actor .counters .counter .counter-value > * {
   display: inline;
 }
-.dnd5e.sheet.actor .counters .counter input[type="text"] {
+.dnd5e.sheet.actor .counters .counter input[type="text"],
+.dnd5e.sheet.actor .counters .counter input[type="number"] {
   height: 20px;
   max-width: 20px;
   margin: 0;
@@ -760,6 +765,7 @@
   padding: 0 5px;
   overflow-y: auto;
   scrollbar-width: thin;
+  color: #7a7971;
 }
 .dnd5e.sheet.actor .inventory-list .item {
   line-height: 30px;
@@ -785,10 +791,10 @@
   overflow-x: hidden;
 }
 .dnd5e.sheet.actor .inventory-list .item .item-name.rollable:hover .item-image {
-  background-image: url("/icons/svg/d20-grey.svg") !important;
+  background-image: url("../../icons/svg/d20-grey.svg") !important;
 }
 .dnd5e.sheet.actor .inventory-list .item .item-name.rollable .item-image:hover {
-  background-image: url("/icons/svg/d20-black.svg") !important;
+  background-image: url("../../icons/svg/d20-black.svg") !important;
 }
 .dnd5e.sheet.actor .inventory-list .item .item-name i.attuned {
   color: #7a7971;
@@ -810,6 +816,7 @@
 .dnd5e.sheet.actor .inventory-list .inventory-header {
   margin: 2px 0;
   padding: 0;
+  align-items: center;
   background: rgba(0, 0, 0, 0.05);
   border: 2px groove #eeede0;
   font-weight: bold;
@@ -825,6 +832,9 @@
 }
 .dnd5e.sheet.actor .inventory-list .inventory-header .item-controls a.item-create {
   flex: 0 0 100%;
+}
+.dnd5e.sheet.actor .inventory-list .item-name {
+  color: #191813;
 }
 .dnd5e.sheet.actor .inventory-list .item-detail {
   flex: 0 0 70px;
@@ -1013,6 +1023,37 @@
 .dnd5e.sheet.actor .spellbook-empty .item-controls {
   flex: 1;
 }
+.dnd5e.sheet.actor .effects .effect-name {
+  flex: 2;
+  align-items: center;
+  color: #191813;
+}
+.dnd5e.sheet.actor .effects .effect-name h4 {
+  margin: 0;
+}
+.dnd5e.sheet.actor .effects .effect-icon {
+  flex: 0 0 30px;
+  height: 30px;
+  margin-right: 5px;
+  border: none;
+}
+.dnd5e.sheet.actor .effects .effect-source,
+.dnd5e.sheet.actor .effects .effect-duration {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+}
+.dnd5e.sheet.actor .effects .effect-controls {
+  flex: 0 0 60px;
+  text-align: right;
+}
+.dnd5e.sheet.actor .effects .effect {
+  align-items: center;
+  border-bottom: 1px solid #c9c7b8;
+}
+.dnd5e.sheet.actor .effects .effect:last-child {
+  border-bottom: none;
+}
 .dnd5e.sheet.actor .editor {
   padding: 0 8px;
 }
@@ -1101,6 +1142,7 @@
   line-height: 18px;
 }
 .dnd5e.sheet.item .details input[type="text"],
+.dnd5e.sheet.item .details input[type="number"],
 .dnd5e.sheet.item .details select {
   height: 24px;
   border: 1px solid #7a7971;
@@ -1304,6 +1346,9 @@
   /* ----------------------------------------- */
   /*  Item Controls                            */
   /* ----------------------------------------- */
+  /* ----------------------------------------- */
+  /*  Biography                                */
+  /* ----------------------------------------- */
 }
 .dnd5e.sheet.actor.character .sheet-header img.profile {
   flex: 0 0 160px;
@@ -1414,6 +1459,26 @@
 .dnd5e.sheet.actor.character .spellbook .item-controls .item-toggle.fixed:hover {
   text-shadow: none;
 }
+.dnd5e.sheet.actor.character .characteristics {
+  flex: 0 0 180px;
+  height: 100%;
+  padding: 0 3px 3px;
+}
+.dnd5e.sheet.actor.character .characteristics label {
+  flex: 0 0 20px;
+  font-family: "Modesto Condensed", "Palatino Linotype", serif;
+  font-size: 20px;
+  font-weight: 700;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 20px;
+  text-align: center;
+}
+.dnd5e.sheet.actor.character .characteristics textarea {
+  font-family: "Signika", serif;
+  border: 1px solid #c9c7b8;
+  resize: none;
+}
 /* ----------------------------------------- */
 /*  Basic Structure                          */
 /* ----------------------------------------- */
@@ -1466,4 +1531,32 @@
 .dnd5e.sheet.actor.vehicle .counters .counter.cargo-cap input {
   max-width: 40px;
   text-align: right;
+}
+/* Text Input */
+input[type="number"] {
+  width: calc(100% - 2px);
+  min-width: 20px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 1px 3px;
+  margin: 0;
+  color: #191813;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: inherit;
+  line-height: inherit;
+  border: 1px solid #7a7971;
+  border-radius: 3px;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+  -moz-appearance: textfield;
+}
+input[type="number"]:focus {
+  box-shadow: 0 0 5px red;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
