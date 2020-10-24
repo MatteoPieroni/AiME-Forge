@@ -9,18 +9,18 @@ export const preloadHandlebarsTemplates = async function() {
   const templatePaths = [
 
     // Actor Sheet Partials
-    "systems/dnd5e/templates/actors/parts/actor-traits.html",
-    "systems/dnd5e/templates/actors/parts/actor-inventory.html",
-    "systems/dnd5e/templates/actors/parts/actor-features.html",
-    "systems/dnd5e/templates/actors/parts/actor-spellbook.html",
-    "systems/dnd5e/templates/actors/parts/actor-background.html",
+    "systems/aime/templates/actors/parts/actor-traits.html",
+    "systems/aime/templates/actors/parts/actor-inventory.html",
+    "systems/aime/templates/actors/parts/actor-features.html",
+    "systems/aime/templates/actors/parts/actor-spellbook.html",
+    "systems/aime/templates/actors/parts/actor-background.html",
 
     // Item Sheet Partials
-    "systems/dnd5e/templates/items/parts/item-action.html",
-    "systems/dnd5e/templates/items/parts/item-activation.html",
-    "systems/dnd5e/templates/items/parts/item-description.html",
-    "systems/dnd5e/templates/items/parts/item-background-description.html",
-    "systems/dnd5e/templates/items/parts/item-mountable.html"
+    "systems/aime/templates/items/parts/item-action.html",
+    "systems/aime/templates/items/parts/item-activation.html",
+    "systems/aime/templates/items/parts/item-description.html",
+    "systems/aime/templates/items/parts/item-background-description.html",
+    "systems/aime/templates/items/parts/item-mountable.html"
   ];
 
   // Load the template parts

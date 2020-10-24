@@ -290,7 +290,7 @@ export default class Item5e extends Item {
 
     // Render the chat card template
     const templateType = ["tool"].includes(this.data.type) ? this.data.type : "item";
-    const template = `systems/dnd5e/templates/chat/${templateType}-card.html`;
+    const template = `systems/aime/templates/chat/${templateType}-card.html`;
     const html = await renderTemplate(template, templateData);
 
     // Basic chat message data
@@ -594,7 +594,7 @@ export default class Item5e extends Item {
   async rollAttack(options={}) {
     const itemData = this.data.data;
     const actorData = this.actor.data.data;
-    const flags = this.actor.data.flags.dnd5e || {};
+    const flags = this.actor.data.flags.aime || {};
     if ( !this.hasAttack ) {
       throw new Error("You may not place an Attack Roll with this Item.");
     }
@@ -648,7 +648,7 @@ export default class Item5e extends Item {
         top: options.event ? options.event.clientY - 80 : null,
         left: window.innerWidth - 710
       },
-      messageData: {"flags.dnd5e.roll": {type: "attack", itemId: this.id }}
+      messageData: {"flags.aime.roll": {type: "attack", itemId: this.id }}
     }, options);
     rollConfig.event = options.event;
 
@@ -691,7 +691,7 @@ export default class Item5e extends Item {
     if ( !this.hasDamage ) {
       throw new Error("You may not make a Damage Roll with this Item.");
     }
-    const messageData = {"flags.dnd5e.roll": {type: "damage", itemId: this.id }};
+    const messageData = {"flags.aime.roll": {type: "damage", itemId: this.id }};
 
     // Get roll data
     const rollData = this.getRollData();
@@ -707,7 +707,7 @@ export default class Item5e extends Item {
     // Adjust damage from versatile usage
     if ( versatile && itemData.damage.versatile ) {
       parts[0] = itemData.damage.versatile;
-      messageData["flags.dnd5e.roll"].versatile = true;
+      messageData["flags.aime.roll"].versatile = true;
     }
 
     // Scale damage from up-casting spells
@@ -872,7 +872,7 @@ export default class Item5e extends Item {
       speaker: ChatMessage.getSpeaker({actor: this.actor}),
       flavor: this.data.data.chatFlavor || title,
       rollMode: game.settings.get("core", "rollMode"),
-      messageData: {"flags.dnd5e.roll": {type: "other", itemId: this.id }}
+      messageData: {"flags.aime.roll": {type: "other", itemId: this.id }}
     });
     return roll;
   }
@@ -989,7 +989,7 @@ export default class Item5e extends Item {
     const rollConfig = mergeObject({
       parts: parts,
       data: rollData,
-      template: "systems/dnd5e/templates/chat/tool-roll-dialog.html",
+      template: "systems/aime/templates/chat/tool-roll-dialog.html",
       title: title,
       speaker: ChatMessage.getSpeaker({actor: this.actor}),
       flavor: `${this.name} - ${game.i18n.localize("DND5E.ToolCheck")}`,
@@ -998,8 +998,8 @@ export default class Item5e extends Item {
         top: options.event ? options.event.clientY - 80 : null,
         left: window.innerWidth - 710,
       },
-      halflingLucky: this.actor.getFlag("dnd5e", "halflingLucky" ) || false,
-      messageData: {"flags.dnd5e.roll": {type: "tool", itemId: this.id }}
+      halflingLucky: this.actor.getFlag("aime", "halflingLucky" ) || false,
+      messageData: {"flags.aime.roll": {type: "tool", itemId: this.id }}
     }, options);
     rollConfig.event = options.event;
 
