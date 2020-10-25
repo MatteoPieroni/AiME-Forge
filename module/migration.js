@@ -3,11 +3,11 @@
  * @return {Promise}      A Promise which resolves once the migration is completed
  */
 export const migrateWorld = async function() {
-	ui.notifications.info(`Applying DnD5E System Migration for version ${game.system.data.version}. Please be patient and do not close your game or shut down your server.`, {permanent: true});
-	
+  ui.notifications.info(`Applying DnD5E System Migration for version ${game.system.data.version}. Please be patient and do not close your game or shut down your server.`, {permanent: true});
+
   // Migrate World Actors
   for ( let a of game.actors.entities ) {
-		try {
+    try {
 			const updateData = migrateActorData(a.data);
 
       if ( !isObjectEmpty(updateData) ) {
@@ -111,7 +111,7 @@ export const migrateActorData = function(actor) {
 	_migrateActorSkills(actor, updateData);
 
   // Remove deprecated fields
-	_migrateRemoveDeprecated(actor, updateData);
+  _migrateRemoveDeprecated(actor, updateData);
 
   // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -272,3 +272,33 @@ const _migrateRemoveDeprecated = function(ent, updateData) {
     updateData[`data.${parts.join(".")}`] = null;
   }
 };
+
+
+/* -------------------------------------------- */
+
+
+/**
+ * A general tool to purge flags from all entities in a Compendium pack.
+ * @param {Compendium} pack   The compendium pack to clean
+ * @private
+ */
+export async function purgeFlags(pack) {
+  const cleanFlags = (flags) => {
+    const flags5e = flags.aime || null;
+    return flags5e ? {aime: flags5e} : {};
+  };
+  await pack.configure({locked: false});
+  const content = await pack.getContent();
+  for ( let entity of content ) {
+    const update = {_id: entity.id, flags: cleanFlags(entity.data.flags)};
+    if ( pack.entity === "Actor" ) {
+      update.items = entity.data.items.map(i => {
+        i.flags = cleanFlags(i.flags);
+        return i;
+      })
+    }
+    await pack.updateEntity(update, {recursive: false});
+    console.log(`Purged flags from ${entity.name}`);
+  }
+  await pack.configure({locked: true});
+}
