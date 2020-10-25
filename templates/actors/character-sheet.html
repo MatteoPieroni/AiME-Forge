@@ -17,8 +17,7 @@
 
                 {{#unless disableExperience}}
                 <div class="experience flexrow">
-                    <input name="data.details.xp.value" type="text" value="{{data.details.xp.value}}"
-                           data-dtype="Number" placeholder="0"/>
+                    <input name="data.details.xp.value" type="text" value="{{data.details.xp.value}}" placeholder="0" data-dtype="Number"/>
                     <span class="sep">/</span>
                     <span class="max">{{data.details.xp.max}}</span>
                 </div>
@@ -34,6 +33,9 @@
                     <input type="text" name="data.details.race" value="{{data.details.race}}" placeholder="{{ localize 'DND5E.Race' }}"/>
                 </li>
                 <li>
+                    <input type="text" name="data.details.background" value="{{data.details.background}}" placeholder="{{ localize 'DND5E.Background' }}"/>
+                </li>
+                <li>
                     <input type="text" name="data.details.shadowweakness" value="{{data.details.shadowweakness}}" placeholder="{{ localize 'DND5E.ShadowWeakness' }}"/>
                 </li>
                 <li class="proficiency">
@@ -46,17 +48,15 @@
                 <li class="attribute health">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.HitPoints" }}</h4>
                     <div class="attribute-value multiple">
-                        <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}"
-                               data-dtype="Number" placeholder="10"/>
+                        <input name="data.attributes.hp.value" type="text" value="{{data.attributes.hp.value}}" placeholder="10" data-dtype="Number"/>
                         <span class="sep"> / </span>
-                        <input name="data.attributes.hp.max" type="text" value="{{data.attributes.hp.max}}"
-                               data-dtype="Number" placeholder="10"/>
+                        <input name="data.attributes.hp.max" type="text" value="{{data.attributes.hp.max}}" placeholder="10" data-dtype="Number"/>
                     </div>
                     <footer class="attribute-footer">
                         <input name="data.attributes.hp.temp" type="text" class="temphp" placeholder="+{{ localize 'DND5E.Temp' }}"
-                               value="{{data.attributes.hp.temp}}" data-dtype="{{data.attributes.hp.type}}"/>
+                               value="{{data.attributes.hp.temp}}" data-dtype="Number"/>
                         <input name="data.attributes.hp.tempmax" type="text" class="temphp" placeholder="+{{ localize 'DND5E.Max' }}"
-                               value="{{data.attributes.hp.tempmax}}" data-dtype="{{data.attributes.hp.type}}"/>
+                               value="{{data.attributes.hp.tempmax}}" data-dtype="Number"/>
                     </footer>
                 </li>
 
@@ -74,8 +74,7 @@
                 <li class="attribute">
                     <h4 class="attribute-name box-title">{{ localize "DND5E.ArmorClass" }}</h4>
                     <div class="attribute-value">
-                        <input name="data.attributes.ac.value" type="text" value="{{data.attributes.ac.value}}"
-                               data-dtype="Number" placeholder="10"/>
+                        <input name="data.attributes.ac.value" type="number" value="{{data.attributes.ac.value}}" placeholder="10"/>
                     </div>
                     <footer class="attribute-footer">
                         <span class="spell-dc">{{localize "DND5E.SpellDC"}} {{data.attributes.spelldc}}</span>
@@ -101,19 +100,19 @@
                     </div>
                     <footer class="attribute-footer">
                         <span>{{ localize "DND5E.Modifier" }}</span>
-                        <input name="data.attributes.init.value" type="text" placeholder="0" data-dtype="Number"
+                        <input name="data.attributes.init.value" type="number" placeholder="0"
                                value="{{numberFormat data.attributes.init.value decimals=0 sign=true}}"/>
                     </footer>
                 </li>
             </ul>
         </section>
-		</header>
+    </header>
 
     {{!-- NPC Sheet Navigation --}}
     <nav class="sheet-navigation tabs" data-group="primary">
         <a class="item active" data-tab="attributes">{{ localize "DND5E.Attributes" }}</a>
         <a class="item" data-tab="inventory">{{ localize "DND5E.Inventory" }}</a>
-        <a class="item" data-tab="features">{{ localize "DND5E.Features" }}</a>
+				<a class="item" data-tab="features">{{ localize "DND5E.Features" }}</a>
 				{{#if actor.flags.aime.magical}}
 					<a class="item" data-tab="spellbook">{{ localize "DND5E.Spellbook" }}</a>
 				{{/if}}
@@ -131,7 +130,7 @@
             {{#each data.abilities as |ability id|}}
                 <li class="ability {{#if ability.proficient}}proficient{{/if}}" data-ability="{{id}}">
                     <h4 class="ability-name box-title rollable">{{ability.label}}</h4>
-                    <input class="ability-score" name="data.abilities.{{id}}.value" type="text" value="{{ability.value}}" data-dtype="Number" placeholder="10"/>
+                    <input class="ability-score" name="data.abilities.{{id}}.value" type="number" value="{{ability.value}}" placeholder="10"/>
                     <div class="ability-modifiers flexrow">
                         <span class="ability-mod" title="Modifier">{{numberFormat ability.mod decimals=0 sign=true}}</span>
                         <input type="hidden" name="data.abilities.{{id}}.proficient" value="{{ability.proficient}}" data-dtype="Number"/>
@@ -171,11 +170,9 @@
                                 {{ localize "DND5E.AbbreviationSR" }} <input name="data.resources.{{res.name}}.sr" type="checkbox" {{checked res.sr}}/>
                             </label>
 
-                            <input name="data.resources.{{res.name}}.value" type="text" value="{{res.value}}"
-                                   data-dtype="Number" placeholder="0"/>
+                            <input name="data.resources.{{res.name}}.value" type="number" value="{{res.value}}" placeholder="0"/>
                             <span class="sep"> / </span>
-                            <input name="data.resources.{{res.name}}.max" type="text" value="{{res.max}}"
-                                  data-dtype="Number" placeholder="0"/>
+                            <input name="data.resources.{{res.name}}.max" type="number" value="{{res.max}}" placeholder="0"/>
 
                             <label class="recharge checkbox">
                                 {{ localize "DND5E.AbbreviationLR" }} <input name="data.resources.{{res.name}}.lr" type="checkbox" {{checked res.lr}}/>
@@ -191,37 +188,17 @@
                         <h4 class="death-save rollable">{{ localize "DND5E.DeathSave" }}</h4>
                         <div class="counter-value">
                             <i class="fas fa-check"></i>
-                            <input type="text" name="data.attributes.death.success" data-dtype="Number" placeholder="0"
+                            <input name="data.attributes.death.success" type="number" placeholder="0"
                                    value="{{data.attributes.death.success}}"/>
                             <i class="fas fa-times"></i>
-                            <input type="text" name="data.attributes.death.failure" data-dtype="Number" placeholder="0"
+                            <input name="data.attributes.death.failure" type="number" placeholder="0"
                                    value="{{data.attributes.death.failure}}"/>
-                        </div>
-                    </div>
-                    <div class="counter flexrow shadow-points">
-                        <h4>
-													{{ localize "DND5E.ShadowPoints" }}
-													<a class="shadow-convert" title="Convert Shadow Points"><i class="fas fa-sync-alt"></i></a>
-												</h4>
-                        <div class="counter-value">
-													<span>Curr <input type="text" name="data.attributes.shadowpoints.current" data-dtype="Number" placeholder="0"
-														value="{{data.attributes.shadowpoints.current}}" /></span>
-													/
-													<span><input type="text" name="data.attributes.shadowpoints.permanent" data-dtype="Number" placeholder="0"
-                                   value="{{data.attributes.shadowpoints.permanent}}" /> Perm</span>
-                        </div>
-                    </div>
-                    <div class="counter flexrow miserable">
-                        <h4>{{ localize "DND5E.Miserable" }}</h4>
-                        <div class="counter-value">
-                            <input type="checkbox" name="data.attributes.miserable" data-dtype="Boolean"
-                                   {{checked data.attributes.miserable}}/>
                         </div>
                     </div>
                     <div class="counter flexrow exhaustion">
                         <h4>{{ localize "DND5E.Exhaustion" }}</h4>
                         <div class="counter-value">
-                            <input type="text" name="data.attributes.exhaustion" data-dtype="Number" placeholder="0"
+                            <input name="data.attributes.exhaustion" type="number" placeholder="0"
                                    value="{{data.attributes.exhaustion}}" />
                         </div>
                     </div>
@@ -235,33 +212,42 @@
                 </div>
 
                 {{!-- Traits --}}
-                {{> "systems/aime/templates/actors/parts/actor-traits.html"}}
+                {{> "systems/dnd5e/templates/actors/parts/actor-traits.html"}}
             </section>
         </div>
 
         {{!-- Inventory Tab --}}
         <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
-            {{> "systems/aime/templates/actors/parts/actor-inventory.html" sections=inventory}}
+            {{> "systems/dnd5e/templates/actors/parts/actor-inventory.html" sections=inventory}}
         </div>
 
         {{!-- Features Tab --}}
         <div class="tab features flexcol" data-group="primary" data-tab="features">
-            {{> "systems/aime/templates/actors/parts/actor-features.html" sections=features}}
+            {{> "systems/dnd5e/templates/actors/parts/actor-features.html" sections=features}}
         </div>
 
         {{!-- Spellbook Tab --}}
         <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-            {{> "systems/aime/templates/actors/parts/actor-spellbook.html"}}
+            {{> "systems/dnd5e/templates/actors/parts/actor-spellbook.html"}}
         </div>
 
-        {{!-- Background Tab --}}
-        <div class="tab background flexcol" data-group="primary" data-tab="background">
-            {{> "systems/aime/templates/actors/parts/actor-background.html" section=background}}
-				</div>
-
         {{!-- Biography Tab --}}
-        <div class="tab biography flexcol" data-group="primary" data-tab="biography">
-            {{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
+        <div class="tab flexrow" data-group="primary" data-tab="biography">
+            <div class="characteristics flexcol">
+                <label>{{ localize "DND5E.Appearance" }}</label>
+                <textarea name="data.details.appearance">{{data.details.appearance}}</textarea>
+                <label>{{ localize "DND5E.PersonalityTraits" }}</label>
+                <textarea name="data.details.trait">{{data.details.trait}}</textarea>
+                <label>{{ localize "DND5E.Ideals" }}</label>
+                <textarea name="data.details.ideal">{{data.details.ideal}}</textarea>
+                <label>{{ localize "DND5E.Bonds" }}</label>
+                <textarea name="data.details.bond">{{data.details.bond}}</textarea>
+                <label>{{ localize "DND5E.Flaws" }}</label>
+                <textarea name="data.details.flaw">{{data.details.flaw}}</textarea>
+            </div>
+            <div class="biography">
+                {{editor content=data.details.biography.value target="data.details.biography.value" button=true owner=owner editable=editable}}
+            </div>
         </div>
     </section>
 </form>

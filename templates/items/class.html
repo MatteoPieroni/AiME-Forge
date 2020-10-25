@@ -6,7 +6,7 @@
 
         <div class="header-details flexrow">
             <h1 class="charname">
-							<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ClassName' }}"/>
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ClassName' }}"/>
             </h1>
 
             <div class="item-subtitle">
@@ -15,25 +15,25 @@
             </div>
 
             <ul class="summary flexrow">
-								{{!-- Subclass Name --}}
-                <li>
-									<!-- TODO: Make this prettier -->
-									{{#if (getProperty config.classFeatures (toLowerCase item.name))}}
-										<label>
-											{{ localize 'DND5E.SubclassName' }}: 	
-											<select name="data.subclass" data-type="String">
-												<option value="" selected>{{localize "DND5E.None"}}</option>
-												{{#select data.subclass}}
-													{{#each (getProperty (getProperty config.classFeatures (toLowerCase item.name)) "subclasses")}}
-														<option value="{{this.label}}">{{this.label}}</option>
-													{{/each}}
-												{{/select}}
-											</select>
-										</label>
-									{{else}}
-										<input type="text" name="data.subclass" value="{{data.subclass}}" placeholder="{{ localize 'DND5E.SubclassName' }}"/>
-									{{/if}}
-                </li>
+							{{!-- Subclass Name --}}
+							<li>
+								<!-- TODO: Make this prettier -->
+								{{#if (getProperty config.classFeatures (toLowerCase item.name))}}
+									<label>
+										{{ localize 'DND5E.SubclassName' }}: 	
+										<select name="data.subclass" data-type="String">
+											<option value="" selected>{{localize "DND5E.None"}}</option>
+											{{#select data.subclass}}
+												{{#each (getProperty (getProperty config.classFeatures (toLowerCase item.name)) "subclasses")}}
+													<option value="{{this.label}}">{{this.label}}</option>
+												{{/each}}
+											{{/select}}
+										</select>
+									</label>
+								{{else}}
+									<input type="text" name="data.subclass" value="{{data.subclass}}" placeholder="{{ localize 'DND5E.SubclassName' }}"/>
+								{{/if}}
+							</li>
             </ul>
         </div>
     </header>
