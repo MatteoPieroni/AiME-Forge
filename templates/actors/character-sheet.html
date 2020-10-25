@@ -195,6 +195,26 @@
                                    value="{{data.attributes.death.failure}}"/>
                         </div>
                     </div>
+                    <div class="counter flexrow shadow-points">
+                        <h4>
+													{{ localize "DND5E.ShadowPoints" }}
+													<a class="shadow-convert" title="Convert Shadow Points"><i class="fas fa-sync-alt"></i></a>
+												</h4>
+                        <div class="counter-value">
+													<span>Curr <input type="text" name="data.attributes.shadowpoints.current" data-dtype="Number" placeholder="0"
+														value="{{data.attributes.shadowpoints.current}}" /></span>
+													/
+													<span><input type="text" name="data.attributes.shadowpoints.permanent" data-dtype="Number" placeholder="0"
+                                   value="{{data.attributes.shadowpoints.permanent}}" /> Perm</span>
+                        </div>
+                    </div>
+                    <div class="counter flexrow miserable">
+                        <h4>{{ localize "DND5E.Miserable" }}</h4>
+                        <div class="counter-value">
+                            <input type="checkbox" name="data.attributes.miserable" data-dtype="Boolean"
+                                   {{checked data.attributes.miserable}}/>
+                        </div>
+                    </div>
                     <div class="counter flexrow exhaustion">
                         <h4>{{ localize "DND5E.Exhaustion" }}</h4>
                         <div class="counter-value">
@@ -212,24 +232,29 @@
                 </div>
 
                 {{!-- Traits --}}
-                {{> "systems/dnd5e/templates/actors/parts/actor-traits.html"}}
+                {{> "systems/aime/templates/actors/parts/actor-traits.html"}}
             </section>
         </div>
 
         {{!-- Inventory Tab --}}
         <div class="tab inventory flexcol" data-group="primary" data-tab="inventory">
-            {{> "systems/dnd5e/templates/actors/parts/actor-inventory.html" sections=inventory}}
+            {{> "systems/aime/templates/actors/parts/actor-inventory.html" sections=inventory}}
         </div>
 
         {{!-- Features Tab --}}
         <div class="tab features flexcol" data-group="primary" data-tab="features">
-            {{> "systems/dnd5e/templates/actors/parts/actor-features.html" sections=features}}
+            {{> "systems/aime/templates/actors/parts/actor-features.html" sections=features}}
         </div>
 
         {{!-- Spellbook Tab --}}
         <div class="tab spellbook flexcol" data-group="primary" data-tab="spellbook">
-            {{> "systems/dnd5e/templates/actors/parts/actor-spellbook.html"}}
+            {{> "systems/aime/templates/actors/parts/actor-spellbook.html"}}
         </div>
+
+        {{!-- Background Tab --}}
+        <div class="tab background flexcol" data-group="primary" data-tab="background">
+            {{> "systems/aime/templates/actors/parts/actor-background.html" section=background}}
+				</div>
 
         {{!-- Biography Tab --}}
         <div class="tab flexrow" data-group="primary" data-tab="biography">
