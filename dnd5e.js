@@ -157,7 +157,7 @@ Hooks.once("ready", function() {
 
   // Determine whether a system migration is required and feasible
   const currentVersion = game.settings.get("aime", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = 0.97;
+  const NEEDS_MIGRATION_VERSION = 1.0;
   const COMPATIBLE_MIGRATION_VERSION = 0.96;
   let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null);
 
