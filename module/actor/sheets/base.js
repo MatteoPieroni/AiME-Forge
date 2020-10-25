@@ -91,7 +91,7 @@ export default class ActorSheet5e extends ActorSheet {
         skl.ability = CONFIG.DND5E.abilityAbbreviations[skl.ability];
         skl.icon = this._getProficiencyIcon(skl.value);
         skl.hover = CONFIG.DND5E.proficiencyLevels[skl.value];
-        skl.label = CONFIG.DND5E.skills[s];
+        skl.label = CONFIG.DND5E.skills[s] || s;
       }
     }
 
