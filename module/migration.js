@@ -242,7 +242,7 @@ function _migrateActorSkills(actor, updateData) {
 				ability: updatedSkills[skill].ability
 			};
 		} else {
-			updateData[`data.skills.=${skill}`] = null;
+			updateData[`data.skills.-=${skill}`] = null;
 		}
   }
 }
