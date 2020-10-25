@@ -13,6 +13,7 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/aime/templates/actors/parts/actor-inventory.html",
     "systems/aime/templates/actors/parts/actor-features.html",
     "systems/aime/templates/actors/parts/actor-spellbook.html",
+    "systems/aime/templates/actors/parts/actor-effects.html",
     "systems/aime/templates/actors/parts/actor-background.html",
 
     // Item Sheet Partials

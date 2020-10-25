@@ -103,7 +103,7 @@ export default class ActorSheetFlags extends BaseEntitySheet {
     for ( let [k, v] of Object.entries(flags) ) {
       if ( [undefined, null, "", false, 0].includes(v) ) {
         delete flags[k];
-        if ( hasProperty(actor.data.flags, `dnd5e.${k}`) ) {
+        if ( hasProperty(actor.data.flags, `aime.${k}`) ) {
           unset = true;
           flags[`-=${k}`] = null;
         }
@@ -120,7 +120,7 @@ export default class ActorSheetFlags extends BaseEntitySheet {
     // Diff the data against any applied overrides and apply
     // TODO: Remove this logical gate once 0.7.x is release channel
     if ( !isNewerVersion("0.7.1", game.data.version) ){
-      updateData.data = diffObject(this.object.overrides, updateData.data);
+      updateData = diffObject(this.object.data, updateData);
     }
     await actor.update(updateData, {diff: false});
   }

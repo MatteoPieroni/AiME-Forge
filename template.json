@@ -267,7 +267,7 @@
         "encumbrance": {
           "value": null,
           "max": null
-				},
+        },
 				"shadowpoints": {
 					"permanent": 0,
 					"current": 0
@@ -282,7 +282,12 @@
           "value": 0,
           "min": 0,
           "max": 300
-				},
+        },
+        "appearance": "",
+        "trait": "",
+        "ideal": "",
+        "bond": "",
+        "flaw": "",
         "hope": "",
         "despair": "",
         "quality": "",

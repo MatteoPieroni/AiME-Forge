@@ -73,7 +73,7 @@ Hooks.once("init", function() {
   CONFIG.DND5E = DND5E;
   CONFIG.Actor.entityClass = Actor5e;
   CONFIG.Item.entityClass = Item5e;
-
+  if ( CONFIG.time ) CONFIG.time.roundTime = 6; // TODO remove conditional after 0.7.x
 
   // Register System Settings
   registerSystemSettings();
@@ -84,11 +84,26 @@ Hooks.once("init", function() {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("dnd5e", ActorSheet5eCharacter, { types: ["character"], makeDefault: true });
-  Actors.registerSheet("dnd5e", ActorSheet5eNPC, { types: ["npc"], makeDefault: true });
-  Actors.registerSheet('dnd5e', ActorSheet5eVehicle, {types: ['vehicle'], makeDefault: true});
+  Actors.registerSheet("aime", ActorSheet5eCharacter, {
+    types: ["character"],
+    makeDefault: true,
+    label: "DND5E.SheetClassCharacter"
+  });
+  Actors.registerSheet("aime", ActorSheet5eNPC, {
+    types: ["npc"],
+    makeDefault: true,
+    label: "DND5E.SheetClassNPC"
+  });
+  Actors.registerSheet('aime', ActorSheet5eVehicle, {
+    types: ['vehicle'],
+    makeDefault: true,
+    label: "DND5E.SheetClassVehicle"
+  });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("dnd5e", ItemSheet5e, {makeDefault: true});
+  Items.registerSheet("aime", ItemSheet5e, {
+    makeDefault: true,
+    label: "DND5E.SheetClassItem"
+  });
 
   // Preload Handlebars Templates
   preloadHandlebarsTemplates();
@@ -139,9 +154,10 @@ Hooks.once("setup", function() {
  * Once the entire VTT framework is initialized, check to see if we should perform a data migration
  */
 Hooks.once("ready", function() {
+
   // Determine whether a system migration is required and feasible
   const currentVersion = game.settings.get("aime", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = 0.97;
+  const NEEDS_MIGRATION_VERSION = 1.0;
   const COMPATIBLE_MIGRATION_VERSION = 0.96;
   let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null);
 

@@ -125,7 +125,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
       else features.passive.items.push(f);
     }
     classes.sort((a, b) => b.levels - a.levels);
-		features.classes.items = classes;
+    features.classes.items = classes;
 		
 		const background = {
       label: "DND5E.ItemTypeBackgroundPl", items: [], hasActions: false, dataset: {type: "background"},
@@ -138,7 +138,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
     data.inventory = Object.values(inventory);
     data.spellbook = spellbook;
     data.preparedSpells = nPrepared;
-		data.features = Object.values(features);
+    data.features = Object.values(features);
 		data.background = background;
   }
 
@@ -176,7 +176,7 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
    */
 	activateListeners(html) {
     super.activateListeners(html);
-		if ( !this.options.editable ) return;
+    if ( !this.options.editable ) return;
 		
 		// Character Functions
     html.find(".shadow-convert").click(this._onConvertShadowPoints.bind(this));
