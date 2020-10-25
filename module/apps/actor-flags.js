@@ -103,7 +103,7 @@ export default class ActorSheetFlags extends BaseEntitySheet {
     for ( let [k, v] of Object.entries(flags) ) {
       if ( [undefined, null, "", false, 0].includes(v) ) {
         delete flags[k];
-        if ( hasProperty(actor.data.flags, `dnd5e.${k}`) ) {
+        if ( hasProperty(actor.data.flags, `aime.${k}`) ) {
           unset = true;
           flags[`-=${k}`] = null;
         }

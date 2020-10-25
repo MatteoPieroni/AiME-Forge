@@ -498,7 +498,7 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   async _onDropActor(event, data) {
-    const canPolymorph = game.user.isGM || (this.actor.owner && game.settings.get('dnd5e', 'allowPolymorphing'));
+    const canPolymorph = game.user.isGM || (this.actor.owner && game.settings.get('aime', 'allowPolymorphing'));
     if ( !canPolymorph ) return false;
 
     // Get the target actor
@@ -517,8 +517,8 @@ export default class ActorSheet5e extends ActorSheet {
       html.find('input').each((i, el) => {
         options[el.name] = el.checked;
       });
-      const settings = mergeObject(game.settings.get('dnd5e', 'polymorphSettings') || {}, options);
-      game.settings.set('dnd5e', 'polymorphSettings', settings);
+      const settings = mergeObject(game.settings.get('aime', 'polymorphSettings') || {}, options);
+      game.settings.set('aime', 'polymorphSettings', settings);
       return settings;
     };
 
@@ -526,7 +526,7 @@ export default class ActorSheet5e extends ActorSheet {
     return new Dialog({
       title: game.i18n.localize('DND5E.PolymorphPromptTitle'),
       content: {
-        options: game.settings.get('dnd5e', 'polymorphSettings'),
+        options: game.settings.get('aime', 'polymorphSettings'),
         i18n: DND5E.polymorphSettings,
         isToken: this.actor.isToken
       },

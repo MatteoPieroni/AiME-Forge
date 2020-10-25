@@ -84,23 +84,23 @@ Hooks.once("init", function() {
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("dnd5e", ActorSheet5eCharacter, {
+  Actors.registerSheet("aime", ActorSheet5eCharacter, {
     types: ["character"],
     makeDefault: true,
     label: "DND5E.SheetClassCharacter"
   });
-  Actors.registerSheet("dnd5e", ActorSheet5eNPC, {
+  Actors.registerSheet("aime", ActorSheet5eNPC, {
     types: ["npc"],
     makeDefault: true,
     label: "DND5E.SheetClassNPC"
   });
-  Actors.registerSheet('dnd5e', ActorSheet5eVehicle, {
+  Actors.registerSheet('aime', ActorSheet5eVehicle, {
     types: ['vehicle'],
     makeDefault: true,
     label: "DND5E.SheetClassVehicle"
   });
   Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("dnd5e", ItemSheet5e, {
+  Items.registerSheet("aime", ItemSheet5e, {
     makeDefault: true,
     label: "DND5E.SheetClassItem"
   });
