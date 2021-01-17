@@ -193,12 +193,6 @@ export default class ActorSheet5eCharacter extends ActorSheet5e {
     super.activateListeners(html);
     if ( !this.options.editable ) return;
 
-		// Character Functions
-    html.find(".shadow-convert").click(this._onConvertShadowPoints.bind(this));
-
-    // Inventory Functions
-    html.find(".currency-convert").click(this._onConvertCurrency.bind(this));
-
     // Item State Toggling
     html.find('.item-toggle').click(this._onToggleItem.bind(this));
 

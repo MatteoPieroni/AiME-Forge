@@ -1213,7 +1213,7 @@ export default class Actor5e extends Actor {
    * @public
    */
   async convertShadowPoints() {
-		const shadowPoints = this.actor.data.data.attributes.shadowpoints;
+		const shadowPoints = this.data.data.attributes.shadowpoints;
 
 		if (shadowPoints.current === 0) {
 			return;
@@ -1224,7 +1224,7 @@ export default class Actor5e extends Actor {
 			permanent: shadowPoints.permanent + 1,
 		};
 
-		this.actor.update({ 'data.attributes.shadowpoints': newShadowPoints })
+		this.update({ 'data.attributes.shadowpoints': newShadowPoints })
   }
 
   /* -------------------------------------------- */
