@@ -1,6 +1,6 @@
 {
   "name": "aime",
-  "version": "1.0.3",
+  "version": "0.3.0",
   "description": "The system to play AiME for Foundry VTT",
   "main": "index.js",
   "devDependencies": {
