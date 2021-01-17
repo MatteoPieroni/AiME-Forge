@@ -15,25 +15,25 @@
             </div>
 
             <ul class="summary flexrow">
-							{{!-- Subclass Name --}}
-							<li>
-								<!-- TODO: Make this prettier -->
-								{{#if (getProperty config.classFeatures (toLowerCase item.name))}}
-									<label>
-										{{ localize 'DND5E.SubclassName' }}: 	
-										<select name="data.subclass" data-type="String">
-											<option value="" selected>{{localize "DND5E.None"}}</option>
-											{{#select data.subclass}}
-												{{#each (getProperty (getProperty config.classFeatures (toLowerCase item.name)) "subclasses")}}
-													<option value="{{this.label}}">{{this.label}}</option>
-												{{/each}}
-											{{/select}}
-										</select>
-									</label>
-								{{else}}
-									<input type="text" name="data.subclass" value="{{data.subclass}}" placeholder="{{ localize 'DND5E.SubclassName' }}"/>
-								{{/if}}
-							</li>
+                {{!-- Subclass Name --}}
+                <li>
+                    <!-- TODO: Make this prettier -->
+                    {{#if (getProperty config.classFeatures (toLowerCase item.name))}}
+                        <label>
+                            {{ localize 'DND5E.SubclassName' }}: 	
+                            <select name="data.subclass" data-type="String">
+                                <option value="" selected>{{localize "DND5E.None"}}</option>
+                                {{#select data.subclass}}
+                                    {{#each (getProperty (getProperty config.classFeatures (toLowerCase item.name)) "subclasses")}}
+                                        <option value="{{this.label}}">{{this.label}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </label>
+                    {{else}}
+                        <input type="text" name="data.subclass" value="{{data.subclass}}" placeholder="{{ localize 'DND5E.SubclassName' }}"/>
+                    {{/if}}
+                </li>
             </ul>
         </div>
     </header>
@@ -112,7 +112,7 @@
                 <label>
                     {{localize "DND5E.ClassSkillsChosen"}}
                     {{#if editable }}
-                    <a class="trait-selector class-skills" data-edit="data.skills" data-options="skills">
+                    <a class="trait-selector class-skills" data-target="data.skills" data-options="skills">
                         <i class="fas fa-edit"></i></a>
                     {{/if}}
                 </label>
