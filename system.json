@@ -175,8 +175,8 @@
   "gridUnits": "ft",
   "primaryTokenAttribute": "attributes.hp",
   "secondaryTokenAttribute": null,
-  "minimumCoreVersion": "0.5.6",
-  "compatibleCoreVersion": "0.7.5",
+  "minimumCoreVersion": "0.7.6",
+  "compatibleCoreVersion": "0.7.9",
   "url": "https://github.com/MatteoPieroni/AiME-Forge",
   "manifest": "https://raw.githubusercontent.com/MatteoPieroni/AiME-Forge/0.3.0/system.json",
   "download": "https://github.com/MatteoPieroni/AiME-Forge/archive/0.3.0.zip"
