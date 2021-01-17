@@ -13,7 +13,7 @@ export const _getInitiativeFormula = function(combatant) {
   let nd = 1;
   let mods = "";
   
-  if (actor.getFlag("aime", "halflingLucky")) mods += "r=1";
+  if (actor.getFlag("aime", "halflingLucky")) mods += "r1=1";
   if (actor.getFlag("aime", "initiativeAdv")) {
     nd = 2;
     mods += "kh";
@@ -27,41 +27,14 @@ export const _getInitiativeFormula = function(combatant) {
   return parts.filter(p => p !== null).join(" + ");
 };
 
-
-/* -------------------------------------------- */
-
-
 /**
- * TODO: A temporary shim until 0.7.x becomes stable
- * @override
+ * When the Combat encounter updates - re-render open Actor sheets for combatants in the encounter.
  */
-TokenConfig.getTrackedAttributes = function(data, _path=[]) {
-
-    // Track the path and record found attributes
-    const attributes = {
-      "bar": [],
-      "value": []
-    };
-
-    // Recursively explore the object
-    for ( let [k, v] of Object.entries(data) ) {
-      let p  = _path.concat([k]);
-
-      // Check objects for both a "value" and a "max"
-      if ( v instanceof Object ) {
-        const isBar = ("value" in v) && ("max" in v);
-        if ( isBar ) attributes.bar.push(p);
-        else {
-          const inner = this.getTrackedAttributes(data[k], p);
-          attributes.bar.push(...inner.bar);
-          attributes.value.push(...inner.value);
-        }
-      }
-
-      // Otherwise identify values which are numeric or null
-      else if ( Number.isNumeric(v) || (v === null) ) {
-        attributes.value.push(p);
-      }
-    }
-    return attributes;
-};
+Hooks.on("updateCombat", (combat, data, options, userId) => {
+  const updateTurn = ("turn" in data) || ("round" in data);
+  if ( !updateTurn ) return;
+  for ( let t of combat.turns ) {
+    const a = t.actor;
+    if ( t.actor ) t.actor.sheet.render(false);
+  }
+});

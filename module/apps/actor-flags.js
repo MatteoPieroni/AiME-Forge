@@ -1,6 +1,6 @@
 /**
  * An application class which provides advanced configuration for special character flags which modify an Actor
- * @extends {BaseEntitySheet}
+ * @implements {BaseEntitySheet}
  */
 export default class ActorSheetFlags extends BaseEntitySheet {
   static get defaultOptions() {
@@ -16,22 +16,16 @@ export default class ActorSheetFlags extends BaseEntitySheet {
 
   /* -------------------------------------------- */
 
-  /**
-   * Configure the title of the special traits selection window to include the Actor name
-   * @type {String}
-   */
+  /** @override */
   get title() {
     return `${game.i18n.localize('DND5E.FlagsTitle')}: ${this.object.name}`;
   }
 
   /* -------------------------------------------- */
 
-  /**
-   * Prepare data used to render the special Actor traits selection UI
-   * @return {Object}
-   */
+  /** @override */
   getData() {
-    const data = super.getData();
+    const data = {};
     data.actor = this.object;
     data.flags = this._getFlags();
     data.bonuses = this._getBonuses();
@@ -43,17 +37,18 @@ export default class ActorSheetFlags extends BaseEntitySheet {
   /**
    * Prepare an object of flags data which groups flags by section
    * Add some additional data for rendering
-   * @return {Object}
+   * @return {object}
    */
   _getFlags() {
     const flags = {};
+    const baseData = this.entity._data;
     for ( let [k, v] of Object.entries(CONFIG.DND5E.characterFlags) ) {
       if ( !flags.hasOwnProperty(v.section) ) flags[v.section] = {};
       let flag = duplicate(v);
       flag.type = v.type.name;
       flag.isCheckbox = v.type === Boolean;
       flag.isSelect = v.hasOwnProperty('choices');
-      flag.value = this.entity.getFlag("aime", k);
+      flag.value = getProperty(baseData.flags, `aime.${k}`);
       flags[v.section][`flags.aime.${k}`] = flag;
     }
     return flags;
@@ -63,7 +58,7 @@ export default class ActorSheetFlags extends BaseEntitySheet {
 
   /**
    * Get the bonuses fields and their localization strings
-   * @return {Array}
+   * @return {Array<object>}
    * @private
    */
   _getBonuses() {
@@ -82,17 +77,14 @@ export default class ActorSheetFlags extends BaseEntitySheet {
       {name: "data.bonuses.spell.dc", label: "DND5E.BonusSpellDC"}
     ];
     for ( let b of bonuses ) {
-      b.value = getProperty(this.object.data, b.name) || "";
+      b.value = getProperty(this.object._data, b.name) || "";
     }
     return bonuses;
   }
 
   /* -------------------------------------------- */
 
-  /**
-   * Update the Actor using the configured flags
-   * Remove/unset any flags which are no longer configured
-   */
+  /** @override */
   async _updateObject(event, formData) {
     const actor = this.object;
     let updateData = expandObject(formData);
@@ -103,7 +95,7 @@ export default class ActorSheetFlags extends BaseEntitySheet {
     for ( let [k, v] of Object.entries(flags) ) {
       if ( [undefined, null, "", false, 0].includes(v) ) {
         delete flags[k];
-        if ( hasProperty(actor.data.flags, `aime.${k}`) ) {
+        if ( hasProperty(actor._data.flags, `aime.${k}`) ) {
           unset = true;
           flags[`-=${k}`] = null;
         }
@@ -118,10 +110,6 @@ export default class ActorSheetFlags extends BaseEntitySheet {
     }
 
     // Diff the data against any applied overrides and apply
-    // TODO: Remove this logical gate once 0.7.x is release channel
-    if ( !isNewerVersion("0.7.1", game.data.version) ){
-      updateData = diffObject(this.object.data, updateData);
-    }
     await actor.update(updateData, {diff: false});
   }
 }

@@ -4,16 +4,16 @@
  * @return {Promise}
  */
 export const preloadHandlebarsTemplates = async function() {
+  return loadTemplates([
 
-  // Define template paths to load
-  const templatePaths = [
+    // Shared Partials
+    "systems/aime/templates/actors/parts/active-effects.html",
 
     // Actor Sheet Partials
     "systems/aime/templates/actors/parts/actor-traits.html",
     "systems/aime/templates/actors/parts/actor-inventory.html",
     "systems/aime/templates/actors/parts/actor-features.html",
     "systems/aime/templates/actors/parts/actor-spellbook.html",
-    "systems/aime/templates/actors/parts/actor-effects.html",
     "systems/aime/templates/actors/parts/actor-background.html",
 
     // Item Sheet Partials
@@ -22,8 +22,5 @@ export const preloadHandlebarsTemplates = async function() {
     "systems/aime/templates/items/parts/item-description.html",
     "systems/aime/templates/items/parts/item-background-description.html",
     "systems/aime/templates/items/parts/item-mountable.html"
-  ];
-
-  // Load the template parts
-  return loadTemplates(templatePaths);
+  ]);
 };

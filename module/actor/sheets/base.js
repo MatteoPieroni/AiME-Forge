@@ -1,7 +1,10 @@
 import Item5e from "../../item/entity.js";
 import TraitSelector from "../../apps/trait-selector.js";
 import ActorSheetFlags from "../../apps/actor-flags.js";
+import ActorMovementConfig from "../../apps/movement-config.js";
+import ActorSensesConfig from "../../apps/senses-config.js";
 import {DND5E} from '../../config.js';
+import {onManageActiveEffect, prepareActiveEffectCategories} from "../../effects.js";
 
 /**
  * Extend the basic ActorSheet class to suppose system-specific logic and functionality.
@@ -91,9 +94,15 @@ export default class ActorSheet5e extends ActorSheet {
         skl.ability = CONFIG.DND5E.abilityAbbreviations[skl.ability];
         skl.icon = this._getProficiencyIcon(skl.value);
         skl.hover = CONFIG.DND5E.proficiencyLevels[skl.value];
-        skl.label = CONFIG.DND5E.skills[s] || s;
+        skl.label = CONFIG.DND5E.skills[s];
       }
     }
+
+    // Movement speeds
+    data.movement = this._getMovementSpeed(data.actor);
+
+    // Senses
+    data.senses = this._getSenses(data.actor);
 
     // Update traits
     this._prepareTraits(data.actor.data.traits);
@@ -102,11 +111,68 @@ export default class ActorSheet5e extends ActorSheet {
     this._prepareItems(data);
 
     // Prepare active effects
-    // TODO Disabled until 0.7.5 release
-    // this._prepareEffects(data);
+    data.effects = prepareActiveEffectCategories(this.entity.effects);
 
     // Return data to the sheet
     return data
+  }
+
+  /* -------------------------------------------- */
+
+  /**
+   * Prepare the display of movement speed data for the Actor*
+   * @param {object} actorData                The Actor data being prepared.
+   * @param {boolean} [largestPrimary=false]  Show the largest movement speed as "primary", otherwise show "walk"
+   * @returns {{primary: string, special: string}}
+   * @private
+   */
+  _getMovementSpeed(actorData, largestPrimary=false) {
+    const movement = actorData.data.attributes.movement || {};
+
+    // Prepare an array of available movement speeds
+    let speeds = [
+      [movement.burrow, `${game.i18n.localize("DND5E.MovementBurrow")} ${movement.burrow}`],
+      [movement.climb, `${game.i18n.localize("DND5E.MovementClimb")} ${movement.climb}`],
+      [movement.fly, `${game.i18n.localize("DND5E.MovementFly")} ${movement.fly}` + (movement.hover ? ` (${game.i18n.localize("DND5E.MovementHover")})` : "")],
+      [movement.swim, `${game.i18n.localize("DND5E.MovementSwim")} ${movement.swim}`]
+    ]
+    if ( largestPrimary ) {
+      speeds.push([movement.walk, `${game.i18n.localize("DND5E.MovementWalk")} ${movement.walk}`]);
+    }
+
+    // Filter and sort speeds on their values
+    speeds = speeds.filter(s => !!s[0]).sort((a, b) => b[0] - a[0]);
+
+    // Case 1: Largest as primary
+    if ( largestPrimary ) {
+      let primary = speeds.shift();
+      return {
+        primary: `${primary ? primary[1] : "0"} ${movement.units}`,
+        special: speeds.map(s => s[1]).join(", ")
+      }
+    }
+
+    // Case 2: Walk as primary
+    else {
+      return {
+        primary: `${movement.walk || 0} ${movement.units}`,
+        special: speeds.length ? speeds.map(s => s[1]).join(", ") : ""
+      }
+    }
+  }
+
+  /* -------------------------------------------- */
+
+  _getSenses(actorData) {
+    const senses = actorData.data.attributes.senses || {};
+    const tags = {};
+    for ( let [k, label] of Object.entries(CONFIG.DND5E.senses) ) {
+      const v = senses[k] ?? 0
+      if ( v === 0 ) continue;
+      tags[k] = `${game.i18n.localize(label)} ${v} ${senses.units}`;
+    }
+    if ( !!senses.special ) tags["special"] = senses.special;
+    return tags;
   }
 
   /* -------------------------------------------- */
@@ -145,43 +211,6 @@ export default class ActorSheet5e extends ActorSheet {
       }
       trait.cssClass = !isObjectEmpty(trait.selected) ? "" : "inactive";
     }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Prepare the data structure for Active Effects which are currently applied to the Actor.
-   * @param {object} data       The object of rendering data which is being prepared
-   * @private
-   */
-  _prepareEffects(data) {
-
-    // Define effect header categories
-    const categories = {
-      temporary: {
-        label: "Temporary Effects",
-        effects: []
-      },
-      passive: {
-        label: "Passive Effects",
-        effects: []
-      },
-      inactive: {
-        label: "Inactive Effects",
-        effects: []
-      }
-    };
-
-    // Iterate over active effects, classifying them into categories
-    for ( let e of this.actor.effects ) {
-      e._getSourceName(); // Trigger a lookup for the source name
-      if ( e.data.disabled ) categories.inactive.effects.push(e);
-      else if ( e.isTemporary ) categories.temporary.effects.push(e);
-      else categories.inactive.push(e);
-    }
-
-    // Add the prepared categories of effects to the rendering data
-    return data.effects = categories;
   }
 
   /* -------------------------------------------- */
@@ -346,7 +375,7 @@ export default class ActorSheet5e extends ActorSheet {
       1: '<i class="fas fa-check"></i>',
       2: '<i class="fas fa-check-double"></i>'
     };
-    return icons[level];
+    return icons[level] || icons[0];
   }
 
   /* -------------------------------------------- */
@@ -365,7 +394,7 @@ export default class ActorSheet5e extends ActorSheet {
     filterLists.on("click", ".filter-item", this._onToggleFilter.bind(this));
 
     // Item summaries
-    html.find('.item .item-name h4').click(event => this._onItemSummary(event));
+    html.find('.item .item-name.rollable h4').click(event => this._onItemSummary(event));
 
     // Editable Only Listeners
     if ( this.isEditable ) {
@@ -385,7 +414,7 @@ export default class ActorSheet5e extends ActorSheet {
       html.find('.trait-selector').click(this._onTraitSelector.bind(this));
 
       // Configure Special Flags
-      html.find('.configure-flags').click(this._onConfigureFlags.bind(this));
+      html.find('.config-button').click(this._onConfigMenu.bind(this));
 
       // Owned Item management
       html.find('.item-create').click(this._onItemCreate.bind(this));
@@ -395,8 +424,7 @@ export default class ActorSheet5e extends ActorSheet {
       html.find('.slot-max-override').click(this._onSpellSlotOverride.bind(this));
 
       // Active Effect management
-      html.find(".effect-control").click(this._onManageActiveEffect.bind(this));
-
+      html.find(".effect-control").click(ev => onManageActiveEffect(ev, this.entity));
     }
 
     // Owner Only Listeners
@@ -460,11 +488,24 @@ export default class ActorSheet5e extends ActorSheet {
   /* -------------------------------------------- */
 
   /**
-   * Handle click events for the Traits tab button to configure special Character Flags
+   * Handle spawning the TraitSelector application which allows a checkbox of multiple trait options
+   * @param {Event} event   The click event which originated the selection
+   * @private
    */
-  _onConfigureFlags(event) {
+  _onConfigMenu(event) {
     event.preventDefault();
-    new ActorSheetFlags(this.actor).render(true);
+    const button = event.currentTarget;
+    switch ( button.dataset.action ) {
+      case "movement":
+        new ActorMovementConfig(this.object).render(true);
+        break;
+      case "flags":
+        new ActorSheetFlags(this.object).render(true);
+        break;
+      case "senses":
+        new ActorSensesConfig(this.object).render(true);
+        break;
+    }
   }
 
   /* -------------------------------------------- */
@@ -498,7 +539,7 @@ export default class ActorSheet5e extends ActorSheet {
 
   /** @override */
   async _onDropActor(event, data) {
-    const canPolymorph = game.user.isGM || (this.actor.owner && game.settings.get('aime', 'allowPolymorphing'));
+    const canPolymorph = game.user.isGM || (this.actor.owner && game.settings.get("aime", 'allowPolymorphing'));
     if ( !canPolymorph ) return false;
 
     // Get the target actor
@@ -517,8 +558,8 @@ export default class ActorSheet5e extends ActorSheet {
       html.find('input').each((i, el) => {
         options[el.name] = el.checked;
       });
-      const settings = mergeObject(game.settings.get('aime', 'polymorphSettings') || {}, options);
-      game.settings.set('aime', 'polymorphSettings', settings);
+      const settings = mergeObject(game.settings.get("aime", 'polymorphSettings') || {}, options);
+      game.settings.set("aime", 'polymorphSettings', settings);
       return settings;
     };
 
@@ -526,7 +567,7 @@ export default class ActorSheet5e extends ActorSheet {
     return new Dialog({
       title: game.i18n.localize('DND5E.PolymorphPromptTitle'),
       content: {
-        options: game.settings.get('aime', 'polymorphSettings'),
+        options: game.settings.get("aime", 'polymorphSettings'),
         i18n: DND5E.polymorphSettings,
         isToken: this.actor.isToken
       },
@@ -541,6 +582,8 @@ export default class ActorSheet5e extends ActorSheet {
           icon: '<i class="fas fa-paw"></i>',
           label: game.i18n.localize('DND5E.PolymorphWildShape'),
           callback: html => this.actor.transformInto(sourceActor, {
+            keepBio: true,
+            keepClass: true,
             keepMental: true,
             mergeSaves: true,
             mergeSkills: true,
@@ -578,9 +621,7 @@ export default class ActorSheet5e extends ActorSheet {
     }
 
     // Create the owned item as normal
-    // TODO remove conditional logic in 0.7.x
-    if (isNewerVersion(game.data.version, "0.6.9")) return super._onDropItemCreate(itemData);
-    else return this.actor.createEmbeddedEntity("OwnedItem", itemData);
+    return super._onDropItemCreate(itemData);
   }
 
   /* -------------------------------------------- */
@@ -633,14 +674,7 @@ export default class ActorSheet5e extends ActorSheet {
     event.preventDefault();
     const itemId = event.currentTarget.closest(".item").dataset.itemId;
     const item = this.actor.getOwnedItem(itemId);
-
-    // Roll spells through the actor
-    if ( item.data.type === "spell" ) {
-      return this.actor.useSpell(item, {configureDialog: !event.shiftKey});
-    }
-
-    // Otherwise roll the Item directly
-    else return item.roll();
+    return item.roll();
   }
 
   /* -------------------------------------------- */
@@ -701,7 +735,7 @@ export default class ActorSheet5e extends ActorSheet {
       data: duplicate(header.dataset)
     };
     delete itemData.data["type"];
-    return this.actor.createOwnedItem(itemData);
+    return this.actor.createEmbeddedEntity("OwnedItem", itemData);
   }
 
   /* -------------------------------------------- */
@@ -729,28 +763,6 @@ export default class ActorSheet5e extends ActorSheet {
     event.preventDefault();
     const li = event.currentTarget.closest(".item");
     this.actor.deleteOwnedItem(li.dataset.itemId);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Manage Active Effect instances through the Actor Sheet via effect control buttons.
-   * @param {MouseEvent} event     The left-click event on the effect control
-   * @private
-   */
-  _onManageActiveEffect(event) {
-    event.preventDefault();
-    const a = event.currentTarget;
-    const li = a.closest(".effect");
-    const effect = this.actor.effects.get(li.dataset.effectId);
-    switch ( a.dataset.action ) {
-      case "edit":
-        return new ActiveEffectConfig(effect).render(true);
-      case "delete":
-        return effect.delete();
-      case "toggle":
-        return effect.update({disabled: !effect.data.disabled});
-    }
   }
 
   /* -------------------------------------------- */
@@ -840,91 +852,5 @@ export default class ActorSheet5e extends ActorSheet {
       onclick: ev => this.actor.revertOriginalForm()
     });
     return buttons;
-  }
-
-  /* -------------------------------------------- */
-  /*  DEPRECATED                                  */
-  /* -------------------------------------------- */
-
-  /**
-   * TODO: Remove once 0.7.x is release
-   * @deprecated since 0.7.0
-   */
-  async _onDrop (event) {
-    event.preventDefault();
-
-    // Get dropped data
-    let data;
-    try {
-      data = JSON.parse(event.dataTransfer.getData('text/plain'));
-    } catch (err) {
-      return false;
-    }
-    if ( !data ) return false;
-
-    // Handle the drop with a Hooked function
-    const allowed = Hooks.call("dropActorSheetData", this.actor, this, data);
-    if ( allowed === false ) return;
-
-    // Case 1 - Dropped Item
-    if ( data.type === "Item" ) {
-      return this._onDropItem(event, data);
-    }
-
-    // Case 2 - Dropped Actor
-    if ( data.type === "Actor" ) {
-      return this._onDropActor(event, data);
-    }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * TODO: Remove once 0.7.x is release
-   * @deprecated since 0.7.0
-   */
-  async _onDropItem(event, data) {
-    if ( !this.actor.owner ) return false;
-    let itemData = await this._getItemDropData(event, data);
-
-    // Handle item sorting within the same Actor
-    const actor = this.actor;
-    let sameActor = (data.actorId === actor._id) || (actor.isToken && (data.tokenId === actor.token.id));
-    if (sameActor) return this._onSortItem(event, itemData);
-
-    // Create a new item
-    this._onDropItemCreate(itemData);
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * TODO: Remove once 0.7.x is release
-   * @deprecated since 0.7.0
-   */
-  async _getItemDropData(event, data) {
-    let itemData = null;
-
-    // Case 1 - Import from a Compendium pack
-    if (data.pack) {
-      const pack = game.packs.get(data.pack);
-      if (pack.metadata.entity !== "Item") return;
-      itemData = await pack.getEntry(data.id);
-    }
-
-    // Case 2 - Data explicitly provided
-    else if (data.data) {
-      itemData = data.data;
-    }
-
-    // Case 3 - Import from World entity
-    else {
-      let item = game.items.get(data.id);
-      if (!item) return;
-      itemData = item.data;
-    }
-
-    // Return a copy of the extracted data
-    return duplicate(itemData);
   }
 }
