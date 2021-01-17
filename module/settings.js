@@ -7,8 +7,8 @@ export const registerSystemSettings = function() {
     name: "System Migration Version",
     scope: "world",
     config: false,
-    type: Number,
-    default: 0
+    type: String,
+    default: ""
   });
 
   /**
@@ -83,18 +83,6 @@ export const registerSystemSettings = function() {
   });
 
   /**
-   * Option to automatically create Spell Measured Template on roll
-   */
-  game.settings.register("aime", "alwaysPlaceSpellTemplate", {
-    name: "SETTINGS.5eAutoSpellTemplateN",
-    hint: "SETTINGS.5eAutoSpellTemplateL",
-    scope: "client",
-    config: true,
-    default: false,
-    type: Boolean
-  });
-
-  /**
    * Option to automatically collapse Item Card descriptions
    */
   game.settings.register("aime", "autoCollapseItemCards", {
@@ -112,7 +100,7 @@ export const registerSystemSettings = function() {
   /**
    * Option to allow GMs to restrict polymorphing to GMs only.
    */
-  game.settings.register('aime', 'allowPolymorphing', {
+  game.settings.register("aime", 'allowPolymorphing', {
     name: 'SETTINGS.5eAllowPolymorphingN',
     hint: 'SETTINGS.5eAllowPolymorphingL',
     scope: 'world',
@@ -124,7 +112,7 @@ export const registerSystemSettings = function() {
   /**
    * Remember last-used polymorph settings.
    */
-  game.settings.register('aime', 'polymorphSettings', {
+  game.settings.register("aime", 'polymorphSettings', {
     scope: 'client',
     default: {
       keepPhysical: false,

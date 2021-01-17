@@ -29,6 +29,8 @@ import ActorSheet5eVehicle from "./module/actor/sheets/vehicle.js";
 import ItemSheet5e from "./module/item/sheet.js";
 import ShortRestDialog from "./module/apps/short-rest.js";
 import TraitSelector from "./module/apps/trait-selector.js";
+import ActorMovementConfig from "./module/apps/movement-config.js";
+import ActorSensesConfig from "./module/apps/senses-config.js";
 
 // Import Helpers
 import * as chat from "./module/chat.js";
@@ -53,7 +55,8 @@ Hooks.once("init", function() {
       ActorSheet5eVehicle,
       ItemSheet5e,
       ShortRestDialog,
-      TraitSelector
+      TraitSelector,
+      ActorMovementConfig
     },
     canvas: {
       AbilityTemplate
@@ -73,7 +76,10 @@ Hooks.once("init", function() {
   CONFIG.DND5E = DND5E;
   CONFIG.Actor.entityClass = Actor5e;
   CONFIG.Item.entityClass = Item5e;
-  if ( CONFIG.time ) CONFIG.time.roundTime = 6; // TODO remove conditional after 0.7.x
+  CONFIG.time.roundTime = 6;
+
+  // 5e cone RAW should be 53.13 degrees
+  CONFIG.MeasuredTemplate.defaults.angle = 53.13;
 
   // Register System Settings
   registerSystemSettings();
@@ -94,7 +100,7 @@ Hooks.once("init", function() {
     makeDefault: true,
     label: "DND5E.SheetClassNPC"
   });
-  Actors.registerSheet('aime', ActorSheet5eVehicle, {
+  Actors.registerSheet("aime", ActorSheet5eVehicle, {
     types: ['vehicle'],
     makeDefault: true,
     label: "DND5E.SheetClassVehicle"
@@ -121,18 +127,18 @@ Hooks.once("setup", function() {
 
   // Localize CONFIG objects once up-front
   const toLocalize = [
-    "abilities", "abilityAbbreviations", "shadowweaknesses", "conditionTypes", "consumableTypes", "currencies",
-    "damageTypes", "damageResistanceTypes", "distanceUnits", "equipmentTypes", "healingTypes", "itemActionTypes",
-    "limitedUsePeriods", "senses", "skills", "spellComponents", "spellLevels", "spellPreparationModes", "spellSchools",
-    "spellScalingModes", "targetTypes", "timePeriods", "weaponProperties", "weaponTypes", "languages",
-    "polymorphSettings", "armorProficiencies", "weaponProficiencies", "toolProficiencies", "abilityActivationTypes",
-    "abilityConsumptionTypes", "actorSizes", "proficiencyLevels", "cover"
+    "abilities", "abilityAbbreviations", "abilityActivationTypes", "abilityConsumptionTypes", "actorSizes", "shadowweaknesses",
+    "armorProficiencies", "conditionTypes", "consumableTypes", "cover", "currencies", "damageResistanceTypes",
+    "damageTypes", "distanceUnits", "equipmentTypes", "healingTypes", "itemActionTypes", "languages",
+    "limitedUsePeriods", "movementTypes", "movementUnits", "polymorphSettings", "proficiencyLevels", "senses", "skills",
+    "spellComponents", "spellLevels", "spellPreparationModes", "spellScalingModes", "spellSchools", "targetTypes",
+    "timePeriods", "toolProficiencies", "weaponProficiencies", "weaponProperties", "weaponTypes"
   ];
 
   // Exclude some from sorting where the default order matters
   const noSort = [
-    "abilities", "shadowweaknesses", "currencies", "distanceUnits", "itemActionTypes", "proficiencyLevels",
-    "limitedUsePeriods", "spellComponents", "spellLevels", "weaponTypes"
+    "abilities", "shadowweaknesses", "currencies", "distanceUnits", "movementUnits", "itemActionTypes", "proficiencyLevels",
+    "limitedUsePeriods", "spellComponents", "spellLevels", "spellPreparationModes", "weaponTypes"
   ];
 
   // Localize and sort CONFIG objects
@@ -155,22 +161,23 @@ Hooks.once("setup", function() {
  */
 Hooks.once("ready", function() {
 
-  // Determine whether a system migration is required and feasible
-  const currentVersion = game.settings.get("aime", "systemMigrationVersion");
-  const NEEDS_MIGRATION_VERSION = 1.002;
-  const COMPATIBLE_MIGRATION_VERSION = 0.96;
-  let needMigration = (currentVersion < NEEDS_MIGRATION_VERSION) || (currentVersion === null);
-
-  // Perform the migration
-  if ( needMigration && game.user.isGM ) {
-    if ( currentVersion && (currentVersion < COMPATIBLE_MIGRATION_VERSION) ) {
-      ui.notifications.error(`Your DnD5e system data is from too old a Foundry version and cannot be reliably migrated to the latest version. The process will be attempted, but errors may occur.`, {permanent: true});
-    }
-    migrations.migrateWorld();
-  }
-
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => macros.create5eMacro(data, slot));
+
+  // Determine whether a system migration is required and feasible
+  if ( !game.user.isGM ) return;
+  const currentVersion = game.settings.get("aime", "systemMigrationVersion");
+  const NEEDS_MIGRATION_VERSION = "1.003";
+  const COMPATIBLE_MIGRATION_VERSION = 0.96;
+  const needsMigration = currentVersion && isNewerVersion(NEEDS_MIGRATION_VERSION, currentVersion);
+  if ( !needsMigration ) return;
+
+  // Perform the migration
+  if ( currentVersion && isNewerVersion(COMPATIBLE_MIGRATION_VERSION, currentVersion) ) {
+    const warning = `Your DnD5e system data is from too old a Foundry version and cannot be reliably migrated to the latest version. The process will be attempted, but errors may occur.`;
+    ui.notifications.error(warning, {permanent: true});
+  }
+  migrations.migrateWorld();
 });
 
 /* -------------------------------------------- */

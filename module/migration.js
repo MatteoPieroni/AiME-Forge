@@ -8,13 +8,13 @@ export const migrateWorld = async function() {
   // Migrate World Actors
   for ( let a of game.actors.entities ) {
     try {
-			const updateData = migrateActorData(a.data);
-
+      const updateData = migrateActorData(a.data);
       if ( !isObjectEmpty(updateData) ) {
         console.log(`Migrating Actor entity ${a.name}`);
         await a.update(updateData, {enforceTypes: false});
       }
     } catch(err) {
+      err.message = `Failed dnd5e system migration for Actor ${a.name}: ${err.message}`;
       console.error(err);
     }
   }
@@ -28,6 +28,7 @@ export const migrateWorld = async function() {
         await i.update(updateData, {enforceTypes: false});
       }
     } catch(err) {
+      err.message = `Failed dnd5e system migration for Item ${i.name}: ${err.message}`;
       console.error(err);
     }
   }
@@ -41,15 +42,15 @@ export const migrateWorld = async function() {
         await s.update(updateData, {enforceTypes: false});
       }
     } catch(err) {
+      err.message = `Failed dnd5e system migration for Scene ${s.name}: ${err.message}`;
       console.error(err);
     }
   }
 
   // Migrate World Compendium Packs
-  const packs = game.packs.filter(p => {
-    return (p.metadata.package === "world") && ["Actor", "Item", "Scene"].includes(p.metadata.entity)
-  });
-  for ( let p of packs ) {
+  for ( let p of game.packs ) {
+    if ( p.metadata.package !== "world" ) continue;
+    if ( !["Actor", "Item", "Scene"].includes(p.metadata.entity) ) continue;
     await migrateCompendium(p);
   }
 
@@ -69,27 +70,46 @@ export const migrateCompendium = async function(pack) {
   const entity = pack.metadata.entity;
   if ( !["Actor", "Item", "Scene"].includes(entity) ) return;
 
+  // Unlock the pack for editing
+  const wasLocked = pack.locked;
+  await pack.configure({locked: false});
+
   // Begin by requesting server-side data model migration and get the migrated content
   await pack.migrate();
   const content = await pack.getContent();
 
   // Iterate over compendium entries - applying fine-tuned migration functions
   for ( let ent of content ) {
+    let updateData = {};
     try {
-      let updateData = null;
-      if (entity === "Item") updateData = migrateItemData(ent.data);
-      else if (entity === "Actor") updateData = migrateActorData(ent.data);
-      else if ( entity === "Scene" ) updateData = migrateSceneData(ent.data);
-      if (!isObjectEmpty(updateData)) {
-        expandObject(updateData);
-        updateData["_id"] = ent._id;
-        await pack.updateEntity(updateData);
-        console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
+      switch (entity) {
+        case "Actor":
+          updateData = migrateActorData(ent.data);
+          break;
+        case "Item":
+          updateData = migrateItemData(ent.data);
+          break;
+        case "Scene":
+          updateData = migrateSceneData(ent.data);
+          break;
       }
-    } catch(err) {
+      if ( isObjectEmpty(updateData) ) continue;
+
+      // Save the entry, if data was changed
+      updateData["_id"] = ent._id;
+      await pack.updateEntity(updateData);
+      console.log(`Migrated ${entity} entity ${ent.name} in Compendium ${pack.collection}`);
+    }
+
+    // Handle migration failures
+    catch(err) {
+      err.message = `Failed dnd5e system migration for entity ${ent.name} in pack ${pack.collection}: ${err.message}`;
       console.error(err);
     }
   }
+
+  // Apply the original locked status for the pack
+  pack.configure({locked: wasLocked});
   console.log(`Migrated all ${entity} entities from Compendium ${pack.collection}`);
 };
 
@@ -107,11 +127,9 @@ export const migrateActorData = function(actor) {
   const updateData = {};
 
   // Actor Data Updates
-  _migrateActorBonuses(actor, updateData);
+  _migrateActorMovement(actor, updateData);
+  _migrateActorSenses(actor, updateData);
 	_migrateActorSkills(actor, updateData);
-
-  // Remove deprecated fields
-  _migrateRemoveDeprecated(actor, updateData);
 
   // Migrate Owned Items
   if ( !actor.items ) return updateData;
@@ -174,11 +192,7 @@ function cleanActorData(actorData) {
  */
 export const migrateItemData = function(item) {
   const updateData = {};
-
-  // Remove deprecated fields
-  _migrateRemoveDeprecated(item, updateData);
-
-  // Return the migrated update data
+  _migrateItemAttunement(item, updateData);
   return updateData;
 };
 
@@ -216,15 +230,67 @@ export const migrateSceneData = function(scene) {
 /* -------------------------------------------- */
 
 /**
- * Migrate the actor bonuses object
+ * Migrate the actor speed string to movement object
  * @private
  */
-function _migrateActorBonuses(actor, updateData) {
-  const b = game.system.model.Actor.character.bonuses;
-  for ( let k of Object.keys(actor.data.bonuses || {}) ) {
-    if ( k in b ) updateData[`data.bonuses.${k}`] = b[k];
-    else updateData[`data.bonuses.-=${k}`] = null;
+function _migrateActorMovement(actor, updateData) {
+  const ad = actor.data;
+  const old = actor.type === 'vehicle' ? ad?.attributes?.speed : ad?.attributes?.speed?.value;
+  if ( typeof old !== "string" ) return;
+  const s = (old || "").split(" ");
+  if ( s.length > 0 ) updateData["data.attributes.movement.walk"] = Number.isNumeric(s[0]) ? parseInt(s[0]) : null;
+  updateData["data.attributes.-=speed"] = null;
+  return updateData
+}
+
+/* -------------------------------------------- */
+
+/**
+ * Migrate the actor traits.senses string to attributes.senses object
+ * @private
+ */
+function _migrateActorSenses(actor, updateData) {
+  const ad = actor.data;
+  if ( ad?.traits?.senses === undefined ) return;
+  const original = ad.traits.senses || "";
+
+  // Try to match old senses with the format like "Darkvision 60 ft, Blindsight 30 ft"
+  const pattern = /([A-z]+)\s?([0-9]+)\s?([A-z]+)?/
+  let wasMatched = false;
+
+  // Match each comma-separated term
+  for ( let s of original.split(",") ) {
+    s = s.trim();
+    const match = s.match(pattern);
+    if ( !match ) continue;
+    const type = match[1].toLowerCase();
+    if ( type in CONFIG.DND5E.senses ) {
+      updateData[`data.attributes.senses.${type}`] = Number(match[2]).toNearest(0.5);
+      wasMatched = true;
+    }
   }
+
+  // If nothing was matched, but there was an old string - put the whole thing in "special"
+  if ( !wasMatched && !!original ) {
+    updateData["data.attributes.senses.special"] = original;
+  }
+
+  // Remove the old traits.senses string once the migration is complete
+  updateData["data.traits.-=senses"] = null;
+  return updateData;
+}
+
+/* -------------------------------------------- */
+
+/**
+ * Delete the old data.attuned boolean
+ * @private
+ */
+function _migrateItemAttunement(item, updateData) {
+  if ( item.data.attuned === undefined ) return;
+  updateData["data.attunement"] = CONFIG.DND5E.attunementTypes.NONE;
+  updateData["data.-=attuned"] = null;
+  return updateData;
 }
 
 /**
@@ -250,33 +316,6 @@ function _migrateActorSkills(actor, updateData) {
 
 /* -------------------------------------------- */
 
-
-/**
- * A general migration to remove all fields from the data model which are flagged with a _deprecated tag
- * @private
- */
-const _migrateRemoveDeprecated = function(ent, updateData) {
-  const flat = flattenObject(ent.data);
-
-  // Identify objects to deprecate
-  const toDeprecate = Object.entries(flat).filter(e => e[0].endsWith("_deprecated") && (e[1] === true)).map(e => {
-    let parent = e[0].split(".");
-    parent.pop();
-    return parent.join(".");
-  });
-
-  // Remove them
-  for ( let k of toDeprecate ) {
-    let parts = k.split(".");
-    parts[parts.length-1] = "-=" + parts[parts.length-1];
-    updateData[`data.${parts.join(".")}`] = null;
-  }
-};
-
-
-/* -------------------------------------------- */
-
-
 /**
  * A general tool to purge flags from all entities in a Compendium pack.
  * @param {Compendium} pack   The compendium pack to clean
@@ -301,4 +340,25 @@ export async function purgeFlags(pack) {
     console.log(`Purged flags from ${entity.name}`);
   }
   await pack.configure({locked: true});
+}
+
+/* -------------------------------------------- */
+
+
+/**
+ * Purge the data model of any inner objects which have been flagged as _deprecated.
+ * @param {object} data   The data to clean
+ * @private
+ */
+export function removeDeprecatedObjects(data) {
+  for ( let [k, v] of Object.entries(data) ) {
+    if ( getType(v) === "Object" ) {
+      if (v._deprecated === true) {
+        console.log(`Deleting deprecated object key ${k}`);
+        delete data[k];
+      }
+      else removeDeprecatedObjects(v);
+    }
+  }
+  return data;
 }

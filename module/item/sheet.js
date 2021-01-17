@@ -1,4 +1,5 @@
 import TraitSelector from "../apps/trait-selector.js";
+import {onManageActiveEffect, prepareActiveEffectCategories} from "../effects.js";
 
 /**
  * Override and extend the core ItemSheet implementation to handle specific item types
@@ -7,8 +8,11 @@ import TraitSelector from "../apps/trait-selector.js";
 export default class ItemSheet5e extends ItemSheet {
   constructor(...args) {
     super(...args);
+
+    // Expand the default size of the class sheet
     if ( this.object.data.type === "class" ) {
-      this.options.width =  600;
+      this.options.width = this.position.width =  600;
+      this.options.height = this.position.height = 680;
     }
   }
 
@@ -18,7 +22,7 @@ export default class ItemSheet5e extends ItemSheet {
 	static get defaultOptions() {
 	  return mergeObject(super.defaultOptions, {
       width: 560,
-      height: "auto",
+      height: 400,
       classes: ["dnd5e", "sheet", "item"],
       resizable: true,
       scrollY: [".tab.details"],
@@ -37,15 +41,13 @@ export default class ItemSheet5e extends ItemSheet {
   /* -------------------------------------------- */
 
   /** @override */
-  getData() {
-    const data = super.getData();
+  async getData(options) {
+    const data = super.getData(options);
     data.labels = this.item.labels;
-
-    // Include CONFIG values
     data.config = CONFIG.DND5E;
 
     // Item Type, Status, and Details
-    data.itemType = data.item.type.titleCase();
+    data.itemType = game.i18n.localize(`ITEM.Type${data.item.type.titleCase()}`);
     data.itemStatus = this._getItemStatus(data.item);
     data.itemProperties = this._getItemProperties(data.item);
     data.isPhysical = data.item.data.hasOwnProperty("quantity");
@@ -57,10 +59,17 @@ export default class ItemSheet5e extends ItemSheet {
     data.hasAttackRoll = this.item.hasAttack;
     data.isHealing = data.item.data.actionType === "heal";
     data.isFlatDC = getProperty(data.item.data, "save.scaling") === "flat";
+    data.isLine = ["line", "wall"].includes(data.item.data.target?.type);
+
+    // Original maximum uses formula
+    if ( this.item._data.data?.uses?.max ) data.data.uses.max = this.item._data.data.uses.max;
 
     // Vehicles
     data.isCrewed = data.item.data.activation?.type === 'crew';
     data.isMountable = this._isItemMountable(data.item);
+
+    // Prepare Active Effects
+    data.effects = prepareActiveEffectCategories(this.entity.effects);
     return data;
   }
 
@@ -85,7 +94,7 @@ export default class ItemSheet5e extends ItemSheet {
           ammo[i.id] = `${i.name} (${i.data.data.quantity})`;
         }
         return ammo;
-      }, {});
+      }, {[item._id]: `${item.name} (${item.data.quantity})`});
     }
 
     // Attributes
@@ -110,6 +119,8 @@ export default class ItemSheet5e extends ItemSheet {
     // Charges
     else if ( consume.type === "charges" ) {
       return actor.items.reduce((obj, i) => {
+
+        // Limited-use items
         const uses = i.data.data.uses || {};
         if ( uses.per && uses.max ) {
           const label = uses.per === "charges" ?
@@ -117,6 +128,10 @@ export default class ItemSheet5e extends ItemSheet {
             ` (${game.i18n.format("DND5E.AbilityUseConsumableLabel", {max: uses.max, per: uses.per})})`;
           obj[i.id] = i.name + label;
         }
+
+        // Recharging items
+        const recharge = i.data.data.recharge || {};
+        if ( recharge.value ) obj[i.id] = `${i.name} (${game.i18n.format("DND5E.Recharge")})`;
         return obj;
       }, {})
     }
@@ -214,8 +229,8 @@ export default class ItemSheet5e extends ItemSheet {
 
   /** @override */
   setPosition(position={}) {
-    if ( !this._minimized ) {
-      position.height = this._tabs[0].active === "details" ? "auto" : this.options.height;
+    if ( !(this._minimized  || position.height) ) {
+      position.height = (this._tabs[0].active === "details") ? "auto" : this.options.height;
     }
     return super.setPosition(position);
   }
@@ -225,17 +240,20 @@ export default class ItemSheet5e extends ItemSheet {
 	/* -------------------------------------------- */
 
   /** @override */
-  _updateObject(event, formData) {
+  _getSubmitData(updateData={}) {
 
-    // TODO: This can be removed once 0.7.x is release channel
-    if ( !formData.data ) formData = expandObject(formData);
+    // Create the expanded update data object
+    const fd = new FormDataExtended(this.form, {editors: this.editors});
+    let data = fd.toObject();
+    if ( updateData ) data = mergeObject(data, updateData);
+    else data = expandObject(data);
 
-    // Handle Damage Array
-    const damage = formData.data?.damage;
+    // Handle Damage array
+    const damage = data.data?.damage;
     if ( damage ) damage.parts = Object.values(damage?.parts || {}).map(d => [d[0] || "", d[1] || ""]);
 
-    // Update the Item
-    super._updateObject(event, formData);
+    // Return the flattened submission data
+    return flattenObject(data);
   }
 
   /* -------------------------------------------- */
@@ -243,9 +261,15 @@ export default class ItemSheet5e extends ItemSheet {
   /** @override */
   activateListeners(html) {
     super.activateListeners(html);
-    html.find(".damage-control").click(this._onDamageControl.bind(this));
-		html.find('.trait-selector.class-skills').click(this._onConfigureClassSkills.bind(this));
-		html.find('#level-modifier').click(this._onLevelAdd.bind(this));
+    if ( this.isEditable ) {
+      html.find(".damage-control").click(this._onDamageControl.bind(this));
+      html.find('.trait-selector.class-skills').click(this._onConfigureClassSkills.bind(this));
+      html.find('#level-modifier').click(this._onLevelAdd.bind(this));
+      html.find(".effect-control").click(ev => {
+        if ( this.item.isOwned ) return ui.notifications.warn("Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.")
+        onManageActiveEffect(ev, this.item)
+      });
+    }
   }
 
   /* -------------------------------------------- */
@@ -293,7 +317,7 @@ export default class ItemSheet5e extends ItemSheet {
 
     // Render the Trait Selector dialog
     new TraitSelector(this.item, {
-      name: a.dataset.edit,
+      name: a.dataset.target,
       title: label.innerText,
       choices: Object.entries(CONFIG.DND5E.skills).reduce((obj, e) => {
         if ( choices.includes(e[0] ) ) obj[e[0]] = e[1];
@@ -333,5 +357,13 @@ export default class ItemSheet5e extends ItemSheet {
 		const newLevel = isAddButton ? oldLevel + 1 : 1;
 
 		return this.item.update({	...this.item.data, "data": { ...oldData, levels: newLevel } });
+  }
+
+  /* -------------------------------------------- */
+
+  /** @override */
+  async _onSubmit(...args) {
+    if ( this._tabs[0].active === "details" ) this.position.height = "auto";
+    await super._onSubmit(...args);
   }
 }

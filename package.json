@@ -1,0 +1,23 @@
+{
+  "name": "aime",
+  "version": "0.3.0",
+  "description": "The system to play AiME for Foundry VTT",
+  "main": "index.js",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-less": "^4.0.1"
+  },
+  "scripts": {
+    "dev": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatteoPieroni/AiME-Forge.git"
+  },
+  "author": "Matteo Pieroni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatteoPieroni/AiME-Forge/issues"
+  },
+  "homepage": "https://github.com/MatteoPieroni/AiME-Forge#readme"
+}

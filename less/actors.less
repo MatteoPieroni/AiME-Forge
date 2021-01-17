@@ -1,14 +1,12 @@
-@import "./variables.less";
+@import './variables.less';
 
 @actorNameHeight: 60px;
 
 .dnd5e.sheet.actor {
-
   /* ----------------------------------------- */
   /*  Sheet Header                             */
   /* ----------------------------------------- */
   .sheet-header {
-
     // Portrait Artwork
     img.profile {
       flex: 0 0 160px;
@@ -41,7 +39,8 @@
       height: 30px;
       border-bottom: @borderGroove;
       font-size: 18px;
-      input, span {
+      input,
+      span {
         display: block;
         height: 24px;
         line-height: 24px;
@@ -69,12 +68,29 @@
           line-height: 30px;
         }
       }
-    }
-  }
 
-  .attributes {
-    input.temphp {
-      width: 48%;
+      // Movement Configuration
+      .movement {
+        h4.attribute-name {
+          position: relative;
+        }
+        .config-button {
+          position: absolute;
+          display: none;
+          right: 0;
+          top: 1px;
+          font-size: 12px;
+          font-weight: normal;
+        }
+        &:hover .config-button {
+          display: block;
+        }
+      }
+
+      // Temporary HP
+      input.temphp {
+        width: 48%;
+      }
     }
   }
 
@@ -91,6 +107,7 @@
     font-size: 18px;
     color: @colorOlive;
     border-bottom: 1px solid @colorFaint;
+    white-space: nowrap;
   }
 
   /* ----------------------------------------- */
@@ -140,9 +157,10 @@
         flex: 0 0 18px;
         margin-top: -1px;
         line-height: 18px;
-        font-family: "Signika", sans-serif;
+        font-family: 'Signika', sans-serif;
         font-size: 12px;
         font-weight: 400;
+        white-space: nowrap;
       }
     }
   }
@@ -153,7 +171,7 @@
 
   .ability-scores {
     flex: 0 0 100px;
-    min-height: 440px;
+    height: 440px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -228,14 +246,14 @@
 
   ul.skills-list {
     flex: 0 0 180px;
-		min-height: 440px;
-		height: 100%;
+    min-height: 440px;
+    height: 100%;
     list-style: none;
     margin: 0 5px 0;
     padding: 3px 0 2px;
     border: @borderGroove;
     border-radius: 3px;
-		overflow: auto;
+    overflow: auto;
 
     li.skill {
       height: 24px;
@@ -304,15 +322,15 @@
         }
       }
 
-      input[type="text"],
-      input[type="number"] {
+      input[type='text'],
+      input[type='number'] {
         height: 20px;
         max-width: 20px;
         margin: 0;
         padding: 0;
         text-align: center;
       }
-      input[type="checkbox"] {
+      input[type='checkbox'] {
         position: relative;
         width: 16px;
         height: 16px;
@@ -337,11 +355,12 @@
   }
 
   .traits {
-    .form-group, .form-group-stacked {
+    .form-group,
+    .form-group-stacked {
       margin: 0 0 3px 0;
       justify-content: space-between;
     }
-    .configure-flags {
+    .config-button {
       flex: 1;
     }
 
@@ -407,7 +426,7 @@
         line-height: 20px;
         color: @colorTan;
       }
-      input[type="text"] {
+      input[type='text'] {
         flex: 0 0 48px;
         text-align: center;
         margin-left: 8px;
@@ -416,48 +435,24 @@
     }
   }
 
+  // Inventory item lists
   .inventory-list {
-    list-style: none;
-    margin: 0;
     padding: 0 5px;
-    overflow-y: auto;
-    scrollbar-width: thin;
     color: @colorTan;
-
-    // Inventory Item
     .item {
-      line-height: 30px;
-      padding: 0 2px; // to align with the header border
-      border-bottom: 1px solid @colorFaint;
-      &:last-child { border-bottom: none; }
-
-      // Item Header Name
       .item-name {
         cursor: pointer;
-        max-height: 30px;
-        overflow: hidden;
-
-        .item-image {
-          flex: 0 0 30px;
-          background-size: 30px;
-          margin-right: 5px;
-        }
-
-        h4 {
-          margin: 0;
-          white-space: nowrap;
-          overflow-x: hidden;
-        }
-
         &.rollable:hover .item-image {
-          background-image: url("../../icons/svg/d20-grey.svg") !important;
+          background-image: url('../../icons/svg/d20-grey.svg') !important;
         }
         &.rollable .item-image:hover {
-          background-image: url("../../icons/svg/d20-black.svg") !important;
+          background-image: url('../../icons/svg/d20-black.svg') !important;
         }
-
         i.attuned {
           color: @colorTan;
+        }
+        i.not-attuned {
+          color: @colorCrimson;
         }
       }
 
@@ -477,28 +472,13 @@
         flex: 0 0 80px;
         text-align: right;
         font-size: 11px;
-        color: @colorTan;
         white-space: nowrap;
       }
     }
 
     // Inventory Header
     .inventory-header {
-      margin: 2px 0;
-      padding: 0;
       align-items: center;
-      background: rgba(0, 0, 0, 0.05);
-      border: @borderGroove;
-      font-weight: bold;
-      line-height: 24px;
-
-      h3 {
-        margin: 0 -5px 0 0;
-        padding-left: 5px;
-        .modesto();
-        font-size: 16px;
-      }
-
       .item-controls a.item-create {
         flex: 0 0 100%;
       }
@@ -513,15 +493,20 @@
     .item-detail {
       flex: 0 0 70px;
       font-size: 12px;
-      color: @colorTan;
       text-align: center;
       border-right: 1px solid @colorFaint;
       word-break: break-word;
       white-space: nowrap;
       overflow: hidden;
-
-      &:last-child { border-right: none; }
-      &.item-action {flex: 0 0 100px}
+      &:last-child {
+        border-right: none;
+      }
+      &.item-action {
+        flex: 0 0 100px;
+      }
+      &.attunement {
+        flex: 0 0 24px;
+      }
     }
 
     .item-weight {
@@ -530,24 +515,9 @@
       border-right: 1px solid @colorFaint;
     }
 
-    .item-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
     // Item Control Buttons
     .item-controls {
       flex: 0 0 44px;
-      .flexrow();
-      justify-content: flex-end;
-
-      a {
-        flex: 0 0 22px;
-        font-size: 12px;
-        text-align: center;
-        color: @colorTan;
-      }
     }
 
     // Item Dropdown Summary
@@ -556,6 +526,7 @@
       font-size: 12px;
       line-height: 16px;
       padding: 0.25em 0.5em;
+      color: @colorDark;
       border-top: 1px solid @colorFaint;
     }
   }
@@ -588,15 +559,19 @@
       font-size: 13px;
       line-height: 12px;
       text-align: right;
-      color: #EEE;
+      color: #eee;
       text-shadow: 0 0 5px #000;
     }
 
     .encumbrance-breakpoint {
       display: block;
       position: absolute;
-      &.encumbrance-33 { left: 33% }
-      &.encumbrance-66 { left: 66% }
+      &.encumbrance-33 {
+        left: 33%;
+      }
+      &.encumbrance-66 {
+        left: 66%;
+      }
     }
 
     .arrow-up {
@@ -618,8 +593,12 @@
     }
 
     &.encumbered {
-      .arrow-up { border-bottom: 4px solid #000; }
-      .arrow-down { border-top: 4px solid #000; }
+      .arrow-up {
+        border-bottom: 4px solid #000;
+      }
+      .arrow-down {
+        border-top: 4px solid #000;
+      }
     }
   }
 
@@ -630,26 +609,24 @@
   .spellcasting-ability {
     flex: 0 0 240px;
     margin: 0;
-
-    input, span {
-      flex: 0 0 32px;
+    label,
+    span {
+      flex: none;
+    }
+    input {
+      flex: 0 0 28px;
       text-align: center;
     }
     select {
       margin: 0 5px;
-      flex: 0 0 150px;
-    }
-    h3.spell-dc {
-      flex: 1;
-      text-align: right;
+      flex: 0 0 120px;
     }
   }
 
   .spell-slots,
   .spell-comps {
-    flex: 0 0 75px;
-    padding-right: 5px;
-    text-align: right;
+    flex: none;
+    padding: 0 5px;
     font-size: 12px;
     color: @colorTan;
     border-right: 1px solid @colorFaint;
@@ -666,12 +643,15 @@
     }
   }
 
-  .spell-uses {
-    padding-right: 8px;
-    text-align: right !important;
+  .spellbook .spell-uses {
+    padding-right: 5px;
+    text-align: right;
+    color: @colorTan;
   }
 
-  .spell-school, .spell-action, .spell-target {
+  .spell-school,
+  .spell-action,
+  .spell-target {
     flex: 0 0 100px;
     font-size: 12px;
     color: @colorTan;
@@ -681,7 +661,8 @@
 
   .spell-component {
     line-height: 14px;
-    &.C, &.R {
+    &.C,
+    &.R {
       display: inline-block;
       text-align: center;
       padding-top: 1px;
@@ -694,44 +675,8 @@
   }
 
   // Empty spellbook controls
-  .spellbook-empty .item-controls { flex: 1; }
-
-  /* ----------------------------------------- */
-  /*  Active Effects                           */
-  /* ----------------------------------------- */
-
-  .effects {
-    .effect-name{
-      flex: 2;
-      align-items: center;
-      color: @colorDark;
-      h4 { margin: 0; }
-    }
-
-    .effect-icon {
-      flex: 0 0 30px;
-      height: 30px;
-      margin-right: 5px;
-      border: none;
-    }
-
-    .effect-source,
-    .effect-duration {
-      text-align: center;
-      border-left: 1px solid @colorFaint;
-      border-right: 1px solid @colorFaint;
-    }
-
-    .effect-controls {
-      flex: 0 0 60px;
-      text-align: right;
-    }
-
-    .effect {
-      align-items: center;
-      border-bottom: 1px solid @colorFaint;
-      &:last-child { border-bottom: none; }
-    }
+  .spellbook-empty .item-controls {
+    flex: 1;
   }
 
   /* ----------------------------------------- */
@@ -742,8 +687,24 @@
     padding: 0 8px;
   }
 
-	.small-editor {
-		height: 100px;
-		max-height: none;
-	}
+  .small-editor {
+    height: 100px;
+    max-height: none;
+  }
+}
+
+#actor-flags {
+  .window-content {
+    overflow-y: hidden;
+  }
+  form {
+    height: 100%;
+  }
+  .form-body {
+    height: calc(100% - 40px);
+    padding-right: 8px;
+    margin-bottom: 4px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
 }
